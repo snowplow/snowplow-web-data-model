@@ -29,7 +29,7 @@ view: scratch_pv_02 {
 
         10 * COUNT(DISTINCT(FLOOR(EXTRACT(EPOCH FROM ev.derived_tstamp)/10))) - 10 AS time_engaged_in_s -- assumes 10 seconds between subsequent page pings
 
-      FROM atomic.events AS ev
+      FROM demo.events AS ev
 
       INNER JOIN ${scratch_pv_00.SQL_TABLE_NAME} AS wp
         ON ev.event_id = wp.root_id

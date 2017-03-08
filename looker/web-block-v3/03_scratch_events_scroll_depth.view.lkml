@@ -41,7 +41,7 @@ view: scratch_pv_03 {
           LEAST(GREATEST(MIN(NVL(ev.pp_yoffset_min, 0)), 0), MAX(ev.doc_height)) AS vmin, -- should be zero (edge case: not zero because the pv event is missing - but these are not in scratch.dev_pv_01 so not an issue)
           LEAST(GREATEST(MAX(NVL(ev.pp_yoffset_max, 0)), 0), MAX(ev.doc_height)) AS vmax
 
-        FROM atomic.events AS ev
+        FROM demo.events AS ev
 
         INNER JOIN ${scratch_pv_00.SQL_TABLE_NAME} AS wp
           ON  ev.event_id = wp.root_id

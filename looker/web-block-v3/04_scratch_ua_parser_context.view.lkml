@@ -38,7 +38,7 @@ view: scratch_pv_04 {
           ua.os_version,
           ua.device_family
 
-        FROM atomic.com_snowplowanalytics_snowplow_ua_parser_context_1 AS ua
+        FROM demo.com_snowplowanalytics_snowplow_ua_parser_context_1 AS ua
 
         INNER JOIN ${scratch_pv_00.SQL_TABLE_NAME} AS wp
           ON ua.root_id = wp.root_id

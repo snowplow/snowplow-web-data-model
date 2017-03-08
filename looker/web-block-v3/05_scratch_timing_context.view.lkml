@@ -45,7 +45,7 @@ view: scratch_pv_05 {
           pt.load_event_start,
           pt.load_event_end
 
-        FROM atomic.org_w3_performance_timing_1 AS pt
+        FROM demo.org_w3_performance_timing_1 AS pt
 
         INNER JOIN ${scratch_pv_00.SQL_TABLE_NAME} AS wp
           ON pt.root_id = wp.root_id

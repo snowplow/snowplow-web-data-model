@@ -26,7 +26,7 @@ view: scratch_pv_00 {
           root_id,
           id AS page_view_id
 
-        FROM atomic.com_snowplowanalytics_snowplow_web_page_1
+        FROM demo.com_snowplowanalytics_snowplow_web_page_1
 
         GROUP BY 1,2
 
@@ -34,7 +34,7 @@ view: scratch_pv_00 {
 
       SELECT * FROM prep WHERE root_id NOT IN (SELECT root_id FROM prep GROUP BY 1 HAVING COUNT(*) > 1) -- exclude all root ID with more than one page view ID
        ;;
-    sql_trigger_value: SELECT MAX(collector_tstamp) FROM atomic.events ;;
+    sql_trigger_value: SELECT MAX(collector_tstamp) FROM demo.events ;;
     distribution: "page_view_id"
     sortkeys: ["page_view_id"]
   }
