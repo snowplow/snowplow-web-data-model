@@ -2,91 +2,91 @@
 
 TABLE OF CONTENTS
 
-[1. Introduction] (## 1. Introduction)
-[2. Requirements] (## 2. Requirements)  
-&nbsp;&nbsp;[2.1 Recommended requirements] (### 2.1 Recommended requirements)  
-&nbsp;&nbsp;[2.2 Minimum requirements] (### 2.2 Minimum requirements)  
-[3. Understanding the individual fields] (## 3. Understanding the individual fields)  
-&nbsp;&nbsp;[3.1 Page Views table] (### 3.1 Page Views table)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.1 User fields] (#### 3.1.1 User fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.2 Session fields] (#### 3.1.2 Session fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.3 Page view fields] (#### 3.1.3 Page view fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.4 Time fields] (#### 3.1.4 Time fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.1.4.1 Core time fields] (##### 3.1.4.1 Core time fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.1.4.2 Optional time fields] (##### 3.1.4.2 Optional time fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.5 Engagement fields] (#### 3.1.5 Engagement fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.6 Page fields] (#### 3.1.6 Page fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.7 Referer fields] (#### 3.1.7 Referer fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.8 Marketing fields] (#### 3.1.8 Marketing fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.9 Geo fields] (#### 3.1.9 Geo fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.10 IP address fields] (#### 3.1.10 IP address fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.11 Browser fields] (#### 3.1.11 Browser fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.12 OS fields] (#### 3.1.12 OS fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.13 Device fields] (#### 3.1.13 Device fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.14 Performance timing fields] (#### 3.1.14 Performance timing fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.1.15 Other fields] (#### 3.1.15 Other fields)  
-&nbsp;&nbsp;[3.2 Sessions table] (### 3.2 Sessions table)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.1 User fields] (#### 3.2.1 User fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.2 Session fields] (#### 3.2.2 Session fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.3 Time fields] (#### 3.2.3 Time fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.2.3.1 Core time fields] (##### 3.2.3.1 Core time fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.2.3.2 Optional time fields] (##### 3.2.3.2 Optional time fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.4 Engagement fields] (#### 3.2.4 Engagement fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.5 First page fields] (#### 3.2.5 First page fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.6 Referer fields] (#### 3.2.6 Referer fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.7 Marketing fields] (#### 3.2.7 Marketing fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.8 Geo fields] (#### 3.2.8 Geo fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.9 IP address fields] (#### 3.2.9 IP address fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.10 Browser fields] (#### 3.2.10 Browser fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.11 OS fields] (#### 3.2.11 OS fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.12 Device fields] (#### 3.2.12 Device fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.2.13 Other fields] (#### 3.2.13 Other fields)  
-&nbsp;&nbsp;[3.3 Users table] (### 3.3 Users table)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.3.1 User fields] (#### 3.3.1 User fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.3.2 Time fields] (#### 3.3.2 Time fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.3.2.1 Core time fields] (##### 3.3.2.1 Core time fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.3.2.2 Optional time fields] (##### 3.3.2.2 Optional time fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.3.3 Engagement fields] (#### 3.3.3 Engagement fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.3.4 First page fields] (#### 3.3.4 First page fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.3.5 Referer fields] (#### 3.3.5 Referer fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.3.6 Marketing fields] (#### 3.3.6 Marketing fields)  
-&nbsp;&nbsp;&nbsp;&nbsp;[3.3.7 Other fields] (#### 3.3.7 Other fields)  
+[1. Introduction](## 1. Introduction)
+[2. Requirements](## 2. Requirements)  
+&nbsp;&nbsp;[2.1 Recommended requirements](### 2.1 Recommended requirements)  
+&nbsp;&nbsp;[2.2 Minimum requirements](### 2.2 Minimum requirements)  
+[3. Understanding the individual fields](## 3. Understanding the individual fields)  
+&nbsp;&nbsp;[3.1 Page Views table](### 3.1 Page Views table)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.1 User fields](#### 3.1.1 User fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.2 Session fields](#### 3.1.2 Session fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.3 Page view fields](#### 3.1.3 Page view fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.4 Time fields](#### 3.1.4 Time fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.1.4.1 Core time fields](##### 3.1.4.1 Core time fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.1.4.2 Optional time fields](##### 3.1.4.2 Optional time fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.5 Engagement fields](#### 3.1.5 Engagement fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.6 Page fields](#### 3.1.6 Page fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.7 Referer fields](#### 3.1.7 Referer fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.8 Marketing fields](#### 3.1.8 Marketing fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.9 Geo fields](#### 3.1.9 Geo fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.10 IP address fields](#### 3.1.10 IP address fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.11 Browser fields](#### 3.1.11 Browser fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.12 OS fields](#### 3.1.12 OS fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.13 Device fields](#### 3.1.13 Device fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.14 Performance timing fields](#### 3.1.14 Performance timing fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1.15 Other fields](#### 3.1.15 Other fields)  
+&nbsp;&nbsp;[3.2 Sessions table](### 3.2 Sessions table)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.1 User fields](#### 3.2.1 User fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.2 Session fields](#### 3.2.2 Session fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.3 Time fields](#### 3.2.3 Time fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.2.3.1 Core time fields](##### 3.2.3.1 Core time fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.2.3.2 Optional time fields](##### 3.2.3.2 Optional time fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.4 Engagement fields](#### 3.2.4 Engagement fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.5 First page fields](#### 3.2.5 First page fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.6 Referer fields](#### 3.2.6 Referer fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.7 Marketing fields](#### 3.2.7 Marketing fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.8 Geo fields](#### 3.2.8 Geo fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.9 IP address fields](#### 3.2.9 IP address fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.10 Browser fields](#### 3.2.10 Browser fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.11 OS fields](#### 3.2.11 OS fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.12 Device fields](#### 3.2.12 Device fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2.13 Other fields](#### 3.2.13 Other fields)  
+&nbsp;&nbsp;[3.3 Users table](### 3.3 Users table)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.3.1 User fields](#### 3.3.1 User fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.3.2 Time fields](#### 3.3.2 Time fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.3.2.1 Core time fields](##### 3.3.2.1 Core time fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.3.2.2 Optional time fields](##### 3.3.2.2 Optional time fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.3.3 Engagement fields](#### 3.3.3 Engagement fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.3.4 First page fields](#### 3.3.4 First page fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.3.5 Referer fields](#### 3.3.5 Referer fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.3.6 Marketing fields](#### 3.3.6 Marketing fields)  
+&nbsp;&nbsp;&nbsp;&nbsp;[3.3.7 Other fields](#### 3.3.7 Other fields)  
 
 
 ## 1. Introduction
 
-The most common tracker for Snowplow users to get started with is the [JavaScript Tracker] (https://github.com/snowplow/snowplow-javascript-tracker). Like all our trackers, you can use it to track the self-describing events and entities that you define yourself. In addition, Snowplow provides built-in support for the web-native events that most users will want to track. This includes events such as page views, page pings, and link clicks.
+The most common tracker for Snowplow users to get started with is the [JavaScript Tracker](https://github.com/snowplow/snowplow-javascript-tracker). Like all our trackers, you can use it to track the self-describing events and entities that you define yourself. In addition, Snowplow provides built-in support for the web-native events that most users will want to track. This includes events such as page views, page pings, and link clicks.
 
 The Snowplow SQL data model makes it easier to get started with web data. It aggregates the page view and page ping events to create a set of derived tables that contain a lot of detail, including: time engaged, scroll depth, and page performance. The model comes in three variants:
 
-1. A straightforward set of [SQL queries] (https://github.com/snowplow/snowplow/tree/master/5-data-modeling/web-model/redshift)  
+1. A straightforward set of [SQL queries](https://github.com/snowplow/snowplow/tree/master/5-data-modeling/web-model/redshift)  
 Use this version to model your web events data in Amazon Redshift.
-2. A variant optimized for [SQL Runner] (https://github.com/snowplow/snowplow/tree/feature/web-models/5-data-modeling/web-model/sql-runner)  
-SQL Runner is an [open source app] (https://github.com/snowplow/sql-runner) that makes it easy to execute SQL statements programmatically as part of a Snowplow data pipeline. This version of the model includes all the SQL queries that make up the model, as well as a playbook you can use to update the tables whenever there's new data.
-3. A variant optimized for [Looker] (https://github.com/snowplow/snowplow/tree/feature/web-models/5-data-modeling/web-model/looker)  
-Looker is a modern [BI tool] (https://looker.com/) that can be used to model and explore Snowplow data. Use this version to quickly set up a Looker Block with the Snowplow web data model.
+2. A variant optimized for [SQL Runner](https://github.com/snowplow/snowplow/tree/feature/web-models/5-data-modeling/web-model/sql-runner)  
+SQL Runner is an [open source app](https://github.com/snowplow/sql-runner) that makes it easy to execute SQL statements programmatically as part of a Snowplow data pipeline. This version of the model includes all the SQL queries that make up the model, as well as a playbook you can use to update the tables whenever there's new data.
+3. A variant optimized for [Looker](https://github.com/snowplow/snowplow/tree/feature/web-models/5-data-modeling/web-model/looker)  
+Looker is a modern [BI tool](https://looker.com/) that can be used to model and explore Snowplow data. Use this version to quickly set up a Looker Block with the Snowplow web data model.
 
 
 ## 2. Requirements
 
 To use this model you must have already set up Snowplow data tracking on your website. You will also need to have enabled the `webPage` context.
 
-Find more information on how to set up Snowplow tracking via the [JavaScript tracker] (https://github.com/snowplow/snowplow/wiki/javascript-tracker).
+Find more information on how to set up Snowplow tracking via the [JavaScript tracker](https://github.com/snowplow/snowplow/wiki/javascript-tracker).
 
-Find more information on the `webPage` [context] (https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker-v2.6#webPage).
+Find more information on the `webPage` [context](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker-v2.6#webPage).
 
 
 ### 2.1 Recommended requirements
 
 To be able to run the model 'as is' and take full advantage of all options, you will need to be using version 2.6.0+ of the Snowplow JavaScript tracker and Snowplow 71+. The `webPage` context must be enabled. You should also enable the `geolocation` and `performanceTiming` contexts, and the `ua_parser` and `campaign_attribution` enrichments.
 
-Find more information about the `geolocation` [context] (https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker#geolocation).
+Find more information about the `geolocation` [context](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker#geolocation).
 
-Find more information about the `performanceTiming` [context] (https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker-v2.6#performanceTiming).
+Find more information about the `performanceTiming` [context](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker-v2.6#performanceTiming).
 
-Find more information about the `ua_parser` [enrichment] (https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
+Find more information about the `ua_parser` [enrichment](https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
 
-Find more information about the `campaign_attribution` [enrichment] (https://github.com/snowplow/snowplow/wiki/Campaign-attribution-enrichment).
+Find more information about the `campaign_attribution` [enrichment](https://github.com/snowplow/snowplow/wiki/Campaign-attribution-enrichment).
 
 
 ### 2.2 Minimum requirements
@@ -241,7 +241,7 @@ As well as the core timestamp fields, you can also have a variety of derived tim
 | `marketing_click_id` | text | The click ID                                                   | 'ac3d8e459'                             |
 | `marketing_network`  | text | The ad network to which the click ID belongs                   | 'DoubleClick'                           |
 
-These fields require the `campaign_attribution` enrichment. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/Campaign-attribution-enrichment).
+These fields require the `campaign_attribution` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/Campaign-attribution-enrichment).
 
 
 #### 3.1.9 Geo fields
@@ -257,7 +257,7 @@ These fields require the `campaign_attribution` enrichment. Find more informatio
 | `geo_longitude`   | text | Visitor location longitude                                | '-122.4124'          |
 | `geo_timezone`    | text | Visitor timezone name                                     | 'Europe/London'      |
 
-These fields require the `geolocation` context. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker#geolocation).
+These fields require the `geolocation` context. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker#geolocation).
 
 
 #### 3.1.10 IP address fields
@@ -285,7 +285,7 @@ These fields require the `geolocation` context. Find more information about it [
 | `browser_window_height` | int  | Viewport height                               | 567                |
 | `browser_language`      | text | Language the browser is set to                | 'en-GB'            |
 
-`browser`, `browser_name`, `browser_major_version`, `browser_minor_version` and  `browser_build_version` require the `ua_parser` enrichment. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
+`browser`, `browser_name`, `browser_major_version`, `browser_minor_version` and  `browser_build_version` require the `ua_parser` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
 
 
 #### 3.1.12 OS fields
@@ -300,7 +300,7 @@ These fields require the `geolocation` context. Find more information about it [
 | `os_manufacturer`  | text | OS manufacturer                          | 'Apple Inc.'       |
 | `os_timezone`      | text | Time zone the OS is set to               | 'America/Chicago'  |
 
-All OS fields except `os_timezone` and `os_manufacturer` require the `ua_parser` enrichment. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
+All OS fields except `os_timezone` and `os_manufacturer` require the `ua_parser` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
 
 
 #### 3.1.13 Device fields
@@ -311,7 +311,7 @@ All OS fields except `os_timezone` and `os_manufacturer` require the `ua_parser`
 | `device_type`      | text    | Type of device        | 'Computer' |
 | `device_is_mobile` | boolean | Is the device mobile? | TRUE       |
 
-`device` requires the `ua_parser` enrichment. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
+`device` requires the `ua_parser` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
 
 
 #### 3.1.14 Performance timing fields
@@ -331,7 +331,7 @@ All OS fields except `os_timezone` and `os_manufacturer` require the `ua_parser`
 | `onload_time_in_ms`                      | int  | Time to complete the load event                                                            | 8       |
 | `total_time_in_ms`                       | int  | Total time from navigation start to load event completion                                  | 18470   |
 
-These fields require the `performanceTiming` context. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker-v2.6#performanceTiming).
+These fields require the `performanceTiming` context. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker-v2.6#performanceTiming).
 
 All times are measured in milliseconds.
 
@@ -474,7 +474,7 @@ These fields carry information about the first page view within the session.
 
 These fields carry information about the first page view within the session.
 
-These fields require the `campaign_attribution` enrichment. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/Campaign-attribution-enrichment).
+These fields require the `campaign_attribution` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/Campaign-attribution-enrichment).
 
 
 #### 3.2.8 Geo fields
@@ -490,7 +490,7 @@ These fields require the `campaign_attribution` enrichment. Find more informatio
 | `geo_longitude`   | text | Visitor location longitude                                | '-122.4124'          |
 | `geo_timezone`    | text | Visitor timezone name                                     | 'Europe/London'      |
 
-These fields require the `geolocation` context. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker#geolocation).
+These fields require the `geolocation` context. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker#geolocation).
 
 
 #### 3.2.9 IP address fields
@@ -516,7 +516,7 @@ These fields require the `geolocation` context. Find more information about it [
 | `browser_engine`        | text | Browser rendering engine                      | 'WEBKIT'           |
 | `browser_language`      | text | Language the browser is set to                | 'en-GB'            |
 
-`browser`, `browser_name`, `browser_major_version`, `browser_minor_version` and  `browser_build_version` require the `ua_parser` enrichment. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
+`browser`, `browser_name`, `browser_major_version`, `browser_minor_version` and  `browser_build_version` require the `ua_parser` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
 
 
 #### 3.2.11 OS fields
@@ -531,7 +531,7 @@ These fields require the `geolocation` context. Find more information about it [
 | `os_manufacturer`  | text | OS manufacturer                          | 'Apple Inc.'       |
 | `os_timezone`      | text | Time zone the OS is set to               | 'America/Chicago'  |
 
-All OS fields except `os_timezone` and `os_manufacturer` require the `ua_parser` enrichment. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
+All OS fields except `os_timezone` and `os_manufacturer` require the `ua_parser` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
 
 
 #### 3.2.12 Device fields
@@ -542,7 +542,7 @@ All OS fields except `os_timezone` and `os_manufacturer` require the `ua_parser`
 | `device_type`      | text    | Type of device        | 'Computer' |
 | `device_is_mobile` | boolean | Is the device mobile? | TRUE       |
 
-`device` requires the `ua_parser` enrichment. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
+`device` requires the `ua_parser` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/ua-parser-enrichment).
 
 
 #### 3.2.13 Other fields
@@ -666,7 +666,7 @@ These fields carry information about the first page view by this user.
 
 These fields carry information about the first page view by this user.
 
-These fields require the `campaign_attribution` enrichment. Find more information about it [here] (https://github.com/snowplow/snowplow/wiki/Campaign-attribution-enrichment).
+These fields require the `campaign_attribution` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/Campaign-attribution-enrichment).
 
 
 #### 3.3.7 Other fields
