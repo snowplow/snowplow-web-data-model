@@ -68,7 +68,9 @@ Looker is a modern [BI tool](https://looker.com/) that can be used to model and 
 
 ## 2. Requirements
 
-To use this model you must have already set up Snowplow data tracking on your website (using the JavaScript tracker v2.6.0+), to track standard `pageView`s, with `enableActivityTracking` set to send `page_pings` - the model presumes 10 second intervals between `page_ping`s, so if your setup is different you will need to amend the [events-time step](https://github.com/snowplow/web-data-model/blob/master/sql-runner/sql/web-model/01-page-views/02-events-time.sql). You will also need to have enabled the `webPage` context.
+To use this model you must have already set up Snowplow data tracking on your website (using the JavaScript tracker v2.6.0+), to track standard `pageView`s, with `enableActivityTracking` set to send `page_pings` - the model presumes 10 second intervals between `page_ping`s, so if your setup is different you will need to amend the [events-time step](https://github.com/snowplow/web-data-model/blob/master/sql-runner/sql/web-model/01-page-views/02-events-time.sql#L34). You will also need to have enabled the `webPage` context.
+
+To amend the SQL to match your `page_ping` settings, simply replace the `10`s in [line 34 of the events-time step](https://github.com/snowplow/web-data-model/blob/master/sql-runner/sql/web-model/01-page-views/02-events-time.sql#L34) with the `heartBeat` setting of your JavaScript tracker.
 
 Find more information on how to set up Snowplow tracking via the [JavaScript tracker](https://github.com/snowplow/snowplow/wiki/javascript-tracker).
 
