@@ -68,18 +68,18 @@ Looker is a modern [BI tool](https://looker.com/) that can be used to model and 
 
 ## 2. Requirements
 
-To use this model you must have already set up Snowplow data tracking on your website. You will also need to have enabled the `webPage` context.
+To use this model you must have already set up Snowplow data tracking on your website (using the JavaScript tracker v2.6.0+), to track standard `pageView`s, with `enableActivityTracking` set to send `page_pings` - the model presumes 10 second intervals between `page_ping`s, so if your setup is different you will need to amend the [events-time step](https://github.com/snowplow/web-data-model/blob/master/sql-runner/sql/web-model/01-page-views/02-events-time.sql). You will also need to have enabled the `webPage` context.
 
 Find more information on how to set up Snowplow tracking via the [JavaScript tracker](https://github.com/snowplow/snowplow/wiki/javascript-tracker).
 
 Find more information on the `webPage` [context](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker-v2.6#webPage).
 
+Find more information on [`page_pings`](https://github.com/snowplow/snowplow/wiki/2-Specific-event-tracking-with-the-Javascript-tracker#32-track-engagement-with-a-web-page-over-time-page-pings)
+
 
 ### 2.1 Recommended requirements
 
-To be able to run the model 'as is' and take full advantage of all options, you will need to be using version 2.6.0+ of the Snowplow JavaScript tracker and Snowplow 71+. The `webPage` context must be enabled. You should also enable the `geolocation` and `performanceTiming` contexts, and the `ua_parser` and `campaign_attribution` enrichments.
-
-Find more information about the `geolocation` [context](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker#geolocation).
+To be able to run the model 'as is' and take full advantage of all options, you will need to be using version 2.6.0+ of the Snowplow JavaScript tracker and Snowplow 71+. The `webPage` context must be enabled. You should also enable the `performanceTiming` contexts, and the `ua_parser` and `campaign_attribution`, `IP_lookups` and `referer_parser` enrichments.
 
 Find more information about the `performanceTiming` [context](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker-v2.6#performanceTiming).
 
@@ -87,12 +87,13 @@ Find more information about the `ua_parser` [enrichment](https://github.com/snow
 
 Find more information about the `campaign_attribution` [enrichment](https://github.com/snowplow/snowplow/wiki/Campaign-attribution-enrichment).
 
+Find more information on the `referer_parser` [enrichment](https://github.com/snowplow/snowplow/wiki/referer-parser-enrichment).
 
 ### 2.2 Minimum requirements
 
 You must be using version 2.5.0+ of the JavaScript tracker for the `webPage` context to work. This context is required and you will not be able to use the model without it.
 
-The `geolocation` and `performanceTiming` contexts, and the `ua_parser` and `campaign_attribution` enrichments are optional. You will still be able to use the model without them but you will have to comment out the relevant parts from the SQL code.
+The `performanceTiming` context, and the `referer_parser`, `ua_parser` and `campaign_attribution` enrichments are optional. You will still be able to use the model without them but you will have to comment out the relevant parts from the SQL code.
 
 By default, the model uses the more accurate `derived_tstamp` which makes allowance for inaccurate device clocks. This timestamp is only available in version 2.6.0+ of the JavaScript tracker and Snowplow 71+. If you are using older versions, you will need to change the relevant timestamps in the SQL code.
 
@@ -109,7 +110,7 @@ In order to analyse Snowplow data, it is important to understand how it is struc
 
 | Field                          | Type | Description                                    | Example                                |
 | :---                           | :--- | :---                                           | :---                                   |
-| `user_custom_id`               | text | Unique ID set by business                      | 'jon.doe@email.com'                    |
+| `user_custom_id`               | text | Unique ID set by business, `user_id` atomic field | 'jon.doe@email.com'                    |
 | `user_snowplow_domain_id`      | text | User ID set by Snowplow using 1st party cookie | 'bc2e92ec6c204a14'                     |
 | `user_snowplow_crossdomain_id` | text | User ID set by Snowplow using 3rd party cookie | 'ecdff4d0-9175-40ac-a8bb-325c49733607' |
 
@@ -227,6 +228,7 @@ As well as the core timestamp fields, you can also have a variety of derived tim
 | `referer_source`       | text | Name of referer if recognised         | 'Bing images'            |
 | `referer_term`         | text | Keywords if source is a search engine | 'psychic oracle cards'   |
 
+These fields require the the `referer_parser` entichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/referer-parser-enrichment)
 
 #### 3.1.8 Marketing fields
 
@@ -256,8 +258,7 @@ These fields require the `campaign_attribution` enrichment. Find more informatio
 | `geo_longitude`   | text | Visitor location longitude                                | '-122.4124'          |
 | `geo_timezone`    | text | Visitor timezone name                                     | 'Europe/London'      |
 
-These fields require the `geolocation` context. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker#geolocation).
-
+These fields require the `IP_lookups` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/IP-lookups-enrichment).
 
 #### 3.1.10 IP address fields
 
@@ -269,6 +270,7 @@ These fields require the `geolocation` context. Find more information about it [
 | `ip_domain`       | text | Second level domain name associated with the visitor's IP address                             | 'nuvox.net'          |
 | `ip_net_speed`    | text | Visitor's connection type                                                                     | 'Cable/DSL'          |
 
+These fields require the `IP_lookups` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/IP-lookups-enrichment).
 
 #### 3.1.11 Browser fields
 
@@ -341,7 +343,7 @@ All times are measured in milliseconds.
 | :---     | :--- | :---           | :---          |
 | `app_id` | text | Application ID | 'snowplowweb' |
 
-The application ID is used to distinguish different applications that are being tracked by the same Snowplow stack, eg 'production' versus 'dev'.
+The application ID is used to distinguish different applications that are being tracked by the same Snowplow stack, eg 'production' versus 'dev'. This is hardcooded in the tracker's `appId` argument.
 
 
 ### 3.2 Sessions table
@@ -351,7 +353,7 @@ The application ID is used to distinguish different applications that are being 
 
 | Field                          | Type | Description                                    | Example                                |
 | :---                           | :--- | :---                                           | :---                                   |
-| `user_custom_id`               | text | Unique ID set by business                      | 'jon.doe@email.com'                    |
+| `user_custom_id`               | text | Unique ID set by business, `user_id`           | 'jon.doe@email.com'                    |
 | `user_snowplow_domain_id`      | text | User ID set by Snowplow using 1st party cookie | 'bc2e92ec6c204a14'                     |
 | `user_snowplow_crossdomain_id` | text | User ID set by Snowplow using 3rd party cookie | 'ecdff4d0-9175-40ac-a8bb-325c49733607' |
 
@@ -489,7 +491,7 @@ These fields require the `campaign_attribution` enrichment. Find more informatio
 | `geo_longitude`   | text | Visitor location longitude                                | '-122.4124'          |
 | `geo_timezone`    | text | Visitor timezone name                                     | 'Europe/London'      |
 
-These fields require the `geolocation` context. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker#geolocation).
+These fields require the `IP_lookups` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/IP-lookups-enrichment).
 
 
 #### 3.2.9 IP address fields
@@ -550,7 +552,7 @@ All OS fields except `os_timezone` and `os_manufacturer` require the `ua_parser`
 | :---     | :--- | :---           | :---          |
 | `app_id` | text | Application ID | 'snowplowweb' |
 
-The application ID is used to distinguish different applications that are being tracked by the same Snowplow stack, eg 'production' versus 'dev'.
+The application ID is used to distinguish different applications that are being tracked by the same Snowplow stack, eg 'production' versus 'dev'. This is hardcooded in the tracker's `appId` argument.
 
 
 ### 3.3 Users table
@@ -674,4 +676,4 @@ These fields require the `campaign_attribution` enrichment. Find more informatio
 | :---     | :--- | :---           | :---          |
 | `app_id` | text | Application ID | 'snowplowweb' |
 
-The application ID is used to distinguish different applications that are being tracked by the same Snowplow stack, eg 'production' versus 'dev'.
+The application ID is used to distinguish different applications that are being tracked by the same Snowplow stack, eg 'production' versus 'dev'. This is hardcooded in the tracker's `appId` argument.
