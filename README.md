@@ -230,7 +230,7 @@ As well as the core timestamp fields, you can also have a variety of derived tim
 | `referer_source`       | text | Name of referer if recognised         | 'Bing images'            |
 | `referer_term`         | text | Keywords if source is a search engine | 'psychic oracle cards'   |
 
-These fields require the the `referer_parser` entichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/referer-parser-enrichment)
+These fields require the the `referer_parser` enrichment. Find more information about it [here](https://github.com/snowplow/snowplow/wiki/referer-parser-enrichment)
 
 #### 3.1.8 Marketing fields
 
