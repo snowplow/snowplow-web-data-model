@@ -1,0 +1,5 @@
+Release 1 (2016-12-20)
+----------------------
+Add drill fields to web block (snowplow/snowplow #2956)
+Resolve issues with web model (snowplow/snowplow #2954)
+Add web model (snowplow/snowplow #2925)
