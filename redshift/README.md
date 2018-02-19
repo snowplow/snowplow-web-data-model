@@ -8,7 +8,7 @@ The SQL data model in this repo is a starting point for Snowplow users to get up
 
 The contents of this folder are as follows:
 
-* This `README.md` and the `LICENSE-2.0.txt` Apache license file
+* This `README.md` file
 * `sql` with the web model for Redshift
 
 ## Copyright and license
