@@ -39,6 +39,7 @@ AS (
     ON ev.event_id = wp.root_id
 
   WHERE ev.event_name IN ('page_view', 'page_ping')
+  AND ev.derived_tstamp BETWEEN '2010-01-01' AND GETDATE()
 
   GROUP BY 1
 
