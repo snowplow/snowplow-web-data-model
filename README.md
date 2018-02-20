@@ -85,6 +85,12 @@ For example, if my page ping settings are `snowplow_name_here('enableActivityTra
 20 * COUNT(DISTINCT(FLOOR(EXTRACT(EPOCH FROM ev.derived_tstamp)/20))) - 30 AS time_engaged_in_s
 ```
 
+In the sql-runner variant of the model, this can be achieved by setting the [playbook](sql-runner/playbook/web-model.yml.tmpl) variables:
+
+`first_ping` should reflect the `minimumVisitLength` argument (30 in our example above)
+
+`heartbeat` should reflect the `heartBeat` argument (20 in our example above).
+
 Find more information on how to set up Snowplow tracking via the [JavaScript tracker](https://github.com/snowplow/snowplow/wiki/javascript-tracker).
 
 Find more information on the [web page context](https://github.com/snowplow/snowplow/wiki/1-General-parameters-for-the-Javascript-tracker-v2.6#webPage).
