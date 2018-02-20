@@ -1,0 +1,39 @@
+{
+  "name": "snowplow-web-data-model",
+  "version": "0.1.0",
+  "vendor": "Snowplow Analytics",
+  "trackingDependencies": {
+    "requiredEvents": [
+      "trackPageView",
+      "enableActivityTracking"
+    ],
+    "requiredEntities": "webPage",
+    "requiredEnrichments": null,
+    "optionalEvents": null,
+    "optionalEntities": "performanceTiming",
+    "optionalEnrichments": [
+      "campaign attribution",
+      "ua parser",
+      "IP lookups",
+      "referer parser"
+    ],
+  },
+  "supported": {
+    "databases": "Redshift",
+    "software": ["sql-runner", "looker"]
+  }
+  "description": "Snowplow web data model",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowplow/web-data-model.git"
+  },
+  "bugs": "https://github.com/snowplow/web-data-model/issues",
+  "keywords": [
+    "snowplow",
+    "analytics",
+    "datamodeling",
+    "web",
+    "open source"
+  ],
+  "license": "Apache 2.0"
+}
