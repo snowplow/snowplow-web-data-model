@@ -3,6 +3,7 @@
 ##  Table of contents
 
 - [1. Introduction](#1-introduction)
+  - [1.1 Model structure](#11-model-structure)
 - [2. Requirements](#2-requirements)
   - [2.1 Recommended requirements](#21-recommended-requirements)
   - [2.2 Minimum requirements](#22-minimum-requirements)
@@ -64,6 +65,12 @@ Use this version to model your web events data in Amazon Redshift.
 SQL Runner is an [open source app](https://github.com/snowplow/sql-runner) that makes it easy to execute SQL statements programmatically as part of a Snowplow data pipeline. This version of the model includes all the SQL queries that make up the model, as well as a playbook you can use to update the tables whenever there's new data.
 3. A variant optimized for [Looker](./looker)
 Looker is a modern [BI tool](https://looker.com/) that can be used to model and explore Snowplow data. Use this version to quickly set up a Looker Block with the Snowplow web data model.
+
+## 1.1 Model structure
+
+The web model aggregates Snowplow atomic data to to a page view level, then aggregates that data to a session and user level, to produce three derived tables (page_views, sessions, users):
+
+![model-structure](model-structure.png)
 
 
 ## 2. Requirements
