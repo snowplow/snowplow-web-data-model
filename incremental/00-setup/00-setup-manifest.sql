@@ -7,4 +7,11 @@ DISTSTYLE ALL
 SORTKEY(etl_tstamp);
 
 -- Seed the manifest table
-INSERT INTO scratch.manifest(etl_tstamp) VALUES(DATE_TRUNC('day', GETDATE() - INTERVAL '1 week')); -- change to derived.manifest and {{.start_date}}::TIMESTAMP
+INSERT INTO scratch.manifest(etl_tstamp) -- change to derived.manifest
+
+  SELECT
+    MIN(etl_tstamp)
+  FROM
+    atomic.events
+  WHERE
+    DATE_TRUNC('day', etl_tstamp) = DATE_TRUNC('day', GETDATE() - INTERVAL '1 week') -- replace GETDATE() - INTERVAL '1 week' with {{.start_date}}::TIMESTAMP
