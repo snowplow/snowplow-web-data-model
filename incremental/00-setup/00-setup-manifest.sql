@@ -7,4 +7,4 @@ DISTSTYLE ALL
 SORTKEY(etl_tstamp);
 
 -- Seed the manifest table
-INSERT INTO scratch.manifest(etl_tstamp) VALUES(GETDATE() - INTERVAL '1 week') -- change to derived.manifest and {{.start_date}}::TIMESTAMP
+INSERT INTO scratch.manifest(etl_tstamp) VALUES(DATE_TRUNC('day', GETDATE() - INTERVAL '1 week')); -- change to derived.manifest and {{.start_date}}::TIMESTAMP
