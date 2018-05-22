@@ -52,12 +52,12 @@ CREATE TABLE IF NOT EXISTS scratch.page_view_events (
 
   -- geo fields
   geo_country CHAR(2) ENCODE ZSTD,
-  geo_region CHAR(2) encode ZSTD,
+  geo_region CHAR(2) ENCODE ZSTD,
   geo_region_name VARCHAR(100) ENCODE ZSTD,
   geo_city VARCHAR(75) ENCODE ZSTD,
-  geo_zipcode VARCHAR(15) encode ZSTD,
-  geo_latitude DOUBLE PRECISION encode ZSTD,
-	geo_longitude DOUBLE PRECISION encode ZSTD,
+  geo_zipcode VARCHAR(15) ENCODE ZSTD,
+  geo_latitude DOUBLE PRECISION ENCODE ZSTD,
+	geo_longitude DOUBLE PRECISION ENCODE ZSTD,
   geo_timezone VARCHAR(64) ENCODE ZSTD,
 
   -- IP address
