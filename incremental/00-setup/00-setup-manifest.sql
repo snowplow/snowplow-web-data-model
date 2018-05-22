@@ -14,6 +14,6 @@ INSERT INTO scratch.manifest(etl_tstamp) ( -- change to derived.manifest
   FROM
     atomic.events
   WHERE
-    DATE_TRUNC('day', etl_tstamp) = DATE_TRUNC('day', GETDATE() - INTERVAL '1 week'); -- replace GETDATE() - INTERVAL '1 week' with {{.start_date}}::TIMESTAMP
+    DATE_TRUNC('day', etl_tstamp) = DATE_TRUNC('day', GETDATE() - INTERVAL '1 week') -- replace GETDATE() - INTERVAL '1 week' with {{.start_date}}::TIMESTAMP
 
 );
