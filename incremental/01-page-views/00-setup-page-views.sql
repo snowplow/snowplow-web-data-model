@@ -90,7 +90,6 @@ CREATE TABLE IF NOT EXISTS scratch.page_views_test ( -- change to derived.page_v
   page_view_max_dvce_created_tstamp TIMESTAMP ENCODE ZSTD,
 
   -- calculated fields
-  page_view_index INT8 ENCODE ZSTD,
   page_view_in_session_index INT8 ENCODE ZSTD,
 
   time_engaged_in_s INT8 ENCODE ZSTD,
