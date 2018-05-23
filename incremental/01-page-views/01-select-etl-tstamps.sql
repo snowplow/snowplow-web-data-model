@@ -28,7 +28,7 @@ INSERT INTO scratch.etl_tstamps (
   WHERE
     etl_tstamp NOT IN (SELECT etl_tstamp FROM scratch.manifest ORDER BY 1) -- change to derived.manifest
 		AND etl_tstamp BETWEEN
-      (SELECT MAX(etl_tstamp) FROM scratch.manifest)
+      (SELECT MAX(etl_tstamp) FROM scratch.manifest) - INTERVAL '1 week' -- to ensure that any quarantined data is not missed
       AND
       (SELECT MAX(etl_tstamp) FROM scratch.manifest) + INTERVAL '1 week' -- change to derived.manifest and to INTERVAL '{{.run_cadence}}'
   GROUP BY 1
