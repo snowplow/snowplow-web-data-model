@@ -104,5 +104,3 @@ CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views (
 DISTSTYLE KEY
 DISTKEY (page_view_id)
 SORTKEY (page_view_start_time);
-
-ALTER TABLE {{.output_schema}}.page_views OWNER TO {{.datamodeling_user}};

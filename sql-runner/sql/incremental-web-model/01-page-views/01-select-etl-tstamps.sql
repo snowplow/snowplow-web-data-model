@@ -9,15 +9,11 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.etl_tstamps (
 DISTSTYLE ALL
 SORTKEY(etl_tstamp);
 
--- 1b. change the owner to {{.datamodeling_user}} in case another user runs this step
-
-ALTER TABLE {{.scratch_schema}}.etl_tstamps OWNER TO {{.datamodeling_user}};
-
--- 1c. truncate in case the previous run failed
+-- 1b. truncate in case the previous run failed
 
 TRUNCATE {{.scratch_schema}}.etl_tstamps;
 
--- 1d. insert all ETL timestamps that are not in the manifest (i.e. have not been processed)
+-- 1c. insert all ETL timestamps that are not in the manifest (i.e. have not been processed)
 
 INSERT INTO {{.scratch_schema}}.etl_tstamps (
 

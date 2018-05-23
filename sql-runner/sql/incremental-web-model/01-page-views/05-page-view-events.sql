@@ -91,15 +91,11 @@ DISTSTYLE KEY
 DISTKEY (page_view_id)
 SORTKEY (page_view_id, row);
 
--- 5b. change the owner to {{.datamodeling_user}} in case another user runs this step
-
-ALTER TABLE {{.scratch_schema}}.page_view_events OWNER TO {{.datamodeling_user}};
-
--- 5c. truncate in case the previous run failed
+-- 5b. truncate in case the previous run failed
 
 TRUNCATE {{.scratch_schema}}.page_view_events;
 
--- 5d. insert the dimensions for page views that have not been processed
+-- 5c. insert the dimensions for page views that have not been processed
 
 INSERT INTO {{.scratch_schema}}.page_view_events (
 

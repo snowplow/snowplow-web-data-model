@@ -4,15 +4,11 @@
 
 CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_views (LIKE {{.output_schema}}.page_views);
 
--- 8b. change the owner to {{.datamodeling_user}} in case another user runs this step
-
-ALTER TABLE {{.scratch_schema}}.page_views OWNER TO {{.datamodeling_user}};
-
--- 8c. truncate in case the previous run failed
+-- 8b. truncate in case the previous run failed
 
 TRUNCATE {{.scratch_schema}}.page_views;
 
--- 8d. combine the part table into a single view
+-- 8c. combine the part table into a single view
 
 INSERT INTO {{.scratch_schema}}.page_views (
 

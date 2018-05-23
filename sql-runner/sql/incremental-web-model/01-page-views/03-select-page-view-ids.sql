@@ -9,15 +9,11 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_ids (
 DISTSTYLE ALL
 SORTKEY(id);
 
--- 3b. change the owner to {{.datamodeling_user}} in case another user runs this step
-
-ALTER TABLE {{.scratch_schema}}.page_view_ids OWNER TO {{.datamodeling_user}};
-
--- 3c. truncate in case the previous run failed
+-- 3b. truncate in case the previous run failed
 
 TRUNCATE {{.scratch_schema}}.page_view_ids;
 
--- 3d. insert all page view ID that have not been processed
+-- 3c. insert all page view ID that have not been processed
 
 INSERT INTO {{.scratch_schema}}.page_view_ids (
 

@@ -13,15 +13,11 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.ids (
 DISTKEY(event_id)
 SORTKEY(collector_tstamp);
 
--- 4b. change the owner to {{.datamodeling_user}} in case another user runs this step
-
-ALTER TABLE {{.scratch_schema}}.ids OWNER TO {{.datamodeling_user}};
-
--- 4c. truncate in case the previous run failed
+-- 4b. truncate in case the previous run failed
 
 TRUNCATE {{.scratch_schema}}.ids;
 
--- 4d. insert all event ID and timestamp that have not been processed
+-- 4c. insert all event ID and timestamp that have not been processed
 
 INSERT INTO {{.scratch_schema}}.ids (
 
