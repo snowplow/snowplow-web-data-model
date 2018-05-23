@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS scratch.page_views_test ( -- change to derived.page_v
   mkt_network VARCHAR(64) ENCODE ZSTD,
 
   -- derived channels (marketing channels logic lives here)
-  derived_channels VARCHAR(50) ENCODE ZSTD,
+  channel VARCHAR(50) ENCODE ZSTD,
 
   -- geo fields
   geo_country CHAR(2) ENCODE ZSTD,
