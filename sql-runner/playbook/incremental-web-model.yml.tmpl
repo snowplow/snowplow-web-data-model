@@ -1,0 +1,75 @@
+:targets:
+  - :name:     # insert name
+    :type:     redshift
+    :host:     # insert host
+    :database: # insert database name (default: snowplow)
+    :port:     # insert database port (default: 5439)
+    :username: # insert Redshift user name (default: datamodeling)
+    :password: # insert Redshift user password
+:variables:
+    :input_schema: atomic
+    :scratch_schema: scratch
+    :output_schema: derived
+    :datamodeling_user: # insert Redshift user name (default: datamodeling)
+    :update_cadence: 1 week
+:steps:
+  - :name: 00-setup-page-views.sql
+    :queries:
+      - :name: 00-setup-page-views.sql
+        :file: 01-page-views/00-setup-page-views.sql
+  - :name: 01-select-etl-tstamps
+    :queries:
+      - :name: 01-select-etl-tstamps
+        :file: 01-page-views/01-select-etl-tstamps.sql
+  - :name: 02-select-event-ids
+    :queries:
+      - :name: 02-select-event-ids
+        :file: 01-page-views/02-select-event-ids.sql
+  - :name: 03-select-page-view-ids
+    :queries:
+      - :name: 03-select-page-view-ids
+        :file: 01-page-views/03-select-page-view-ids.sql
+  - :name: 04-select-ids
+    :queries:
+      - :name: 04-select-ids
+        :file: 01-page-views/04-select-ids.sql
+  - :name: 05-page-view-events
+    :queries:
+      - :name: 05-page-view-events
+        :file: 01-page-views/05-page-view-events.sql
+  - :name: 06-page-view-time
+    :queries:
+      - :name: 06-page-view-time
+        :file: 01-page-views/06-page-view-time.sql
+  - :name: 07-page-view-rank
+    :queries:
+      - :name: 07-page-view-rank
+        :file: 01-page-views/07-page-view-rank.sql
+  - :name: 08-page-views
+    :queries:
+      - :name: 08-page-views
+        :file: 01-page-views/08-page-views.sql
+  - :name: 09-delete-page-views
+    :queries:
+      - :name: 09-delete-page-views
+        :file: 01-page-views/09-delete-page-views.sql
+  - :name: 10-append-page-views
+    :queries:
+      - :name: 10-append-page-views
+        :file: 01-page-views/10-append-page-views.sql
+  - :name: 11-append-manifest
+    :queries:
+      - :name: 11-append-manifest
+        :file: 01-page-views/11-append-manifest.sql
+  - :name: 12-cleanup
+    :queries:
+      - :name: 12-cleanup
+        :file: 01-page-views/12-cleanup.sql
+  - :name: 13-vacuum
+    :queries:
+      - :name: 13-vacuum
+        :file: 01-page-views/13-vacuum.sql
+  - :name: 14-analyze
+    :queries:
+      - :name: 14-analyze
+        :file: 01-page-views/14-analyze.sql
