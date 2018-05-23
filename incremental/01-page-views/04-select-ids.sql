@@ -33,7 +33,7 @@ INSERT INTO scratch.ids (
       atomic.com_snowplowanalytics_snowplow_web_page_1
 		WHERE
       id IN (SELECT id FROM scratch.page_view_ids)
-			AND root_tstamp >= (SELECT MIN(collector_tstamp) FROM scratch.event_ids) - INTERVAL '1 week' -- for performance
+			AND root_tstamp >= (SELECT MIN(collector_tstamp) FROM scratch.event_ids) -- for performance
 		GROUP BY 1, 2, 3
 	  ORDER BY 1
 
