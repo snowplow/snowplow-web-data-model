@@ -194,6 +194,6 @@ INSERT INTO scratch.page_view_events (
     ON ev.event_id = id.event_id AND ev.collector_tstamp = id.collector_tstamp
 
   WHERE ev.event_name = 'page_view'
-    AND ev.collector_tstamp >= (SELECT MIN(collector_tstamp) FROM scratch.event_ids) - INTERVAL '1 week' -- for performance
+    AND ev.collector_tstamp >= (SELECT MIN(collector_tstamp) FROM scratch.event_ids) -- for performance
 
 );
