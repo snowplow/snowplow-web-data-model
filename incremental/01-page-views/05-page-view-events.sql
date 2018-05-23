@@ -138,8 +138,8 @@ INSERT INTO scratch.page_view_events (
     ev.refr_urlpath,
     ev.refr_urlquery,
 
-    ev.refr_source,
     ev.refr_medium,
+    ev.refr_source,
     ev.refr_term,
 
     -- marketing fields
