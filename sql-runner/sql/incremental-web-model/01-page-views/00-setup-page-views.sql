@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS scratch.page_views_test ( -- change to derived.page_views
+CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views (
 
   page_view_id CHAR(36) ENCODE ZSTD NOT NULL,
 
@@ -105,4 +105,4 @@ DISTSTYLE KEY
 DISTKEY (page_view_id)
 SORTKEY (page_view_start_time);
 
---ALTER TABLE derived.page_views OWNER TO storageloader;
+ALTER TABLE {{.output_schema}}.page_views OWNER TO {{.datamodeling_user}};

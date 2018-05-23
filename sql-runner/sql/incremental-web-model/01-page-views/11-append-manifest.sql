@@ -1,3 +1,3 @@
 -- 11. APPEND MANIFEST
 
-ALTER TABLE scratch.manifest APPEND FROM scratch.etl_tstamps; -- change to derived.manifest
+ALTER TABLE {{.output_schema}}.manifest APPEND FROM {{.scratch_schema}}.etl_tstamps;

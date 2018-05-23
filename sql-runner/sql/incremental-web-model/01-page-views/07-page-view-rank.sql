@@ -2,7 +2,7 @@
 
 -- 7a. create the table if it doesn't exist
 
-CREATE TABLE IF NOT EXISTS scratch.page_view_rank (
+CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_rank (
 
   session_id CHAR(36) ENCODE ZSTD,
   session_index INT ENCODE ZSTD,
@@ -22,17 +22,17 @@ DISTSTYLE KEY
 DISTKEY (page_view_id)
 SORTKEY (page_view_id);
 
--- 7b. change the owner to storageloader in case another user runs this step
+-- 7b. change the owner to {{.datamodeling_user}} in case another user runs this step
 
---ALTER TABLE scratch.page_view_rank OWNER TO storageloader;
+ALTER TABLE {{.scratch_schema}}.page_view_rank OWNER TO {{.datamodeling_user}};
 
 -- 7c. truncate in case the previous run failed
 
-TRUNCATE scratch.page_view_rank;
+TRUNCATE {{.scratch_schema}}.page_view_rank;
 
 -- 7d. insert the dimensions for page views that have not been processed
 
-INSERT INTO scratch.page_view_rank (
+INSERT INTO {{.scratch_schema}}.page_view_rank (
 
   WITH new_page_views AS (
 
@@ -44,7 +44,7 @@ INSERT INTO scratch.page_view_rank (
       page_view_id,
       derived_tstamp
     FROM
-      scratch.page_view_events
+      {{.scratch_schema}}.page_view_events
     WHERE
       row = 1
 
@@ -62,7 +62,7 @@ INSERT INTO scratch.page_view_rank (
     page_view_id,
     derived_tstamp
   FROM
-    scratch.page_views_test -- change to derived.page_views
+    {{.output_schema}}.page_views
   WHERE
     session_id IN (SELECT DISTINCT session_id FROM new_page_views)
     AND page_view_id NOT IN (SELECT page_view_id FROM new_page_views)

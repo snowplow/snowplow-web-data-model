@@ -1,3 +1,3 @@
 -- 10. APPEND PAGE VIEWS
 
-ALTER TABLE scratch.page_views_test APPEND FROM scratch.page_views; -- change to derived.page_views
+ALTER TABLE {{.output_schema}}.page_views APPEND FROM {{.scratch_schema}}.page_views;

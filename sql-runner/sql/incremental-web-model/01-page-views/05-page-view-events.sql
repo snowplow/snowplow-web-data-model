@@ -2,7 +2,7 @@
 
 -- 5a. create the table if it doesn't exist
 
-CREATE TABLE IF NOT EXISTS scratch.page_view_events (
+CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_events (
 
   page_view_id CHAR(36) ENCODE ZSTD NOT NULL,
 
@@ -91,17 +91,17 @@ DISTSTYLE KEY
 DISTKEY (page_view_id)
 SORTKEY (page_view_id, row);
 
--- 5b. change the owner to storageloader in case another user runs this step
+-- 5b. change the owner to {{.datamodeling_user}} in case another user runs this step
 
---ALTER TABLE scratch.page_view_events OWNER TO storageloader;
+ALTER TABLE {{.scratch_schema}}.page_view_events OWNER TO {{.datamodeling_user}};
 
 -- 5c. truncate in case the previous run failed
 
-TRUNCATE scratch.page_view_events;
+TRUNCATE {{.scratch_schema}}.page_view_events;
 
 -- 5d. insert the dimensions for page views that have not been processed
 
-INSERT INTO scratch.page_view_events (
+INSERT INTO {{.scratch_schema}}.page_view_events (
 
   SELECT
 
@@ -188,12 +188,12 @@ INSERT INTO scratch.page_view_events (
     -- row number
     ROW_NUMBER() OVER (PARTITION BY id.id ORDER BY ev.dvce_created_tstamp) AS row
 
-  FROM atomic.events AS ev
+  FROM {{.input_schema}}.events AS ev
 
-  INNER JOIN scratch.ids AS id
+  INNER JOIN {{.scratch_schema}}.ids AS id
     ON ev.event_id = id.event_id AND ev.collector_tstamp = id.collector_tstamp
 
   WHERE ev.event_name = 'page_view'
-    AND ev.collector_tstamp >= (SELECT MIN(collector_tstamp) FROM scratch.event_ids) -- for performance
+    AND ev.collector_tstamp >= (SELECT MIN(collector_tstamp) FROM {{.scratch_schema}}.event_ids) -- for performance
 
 );

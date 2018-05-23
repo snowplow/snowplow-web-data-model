@@ -2,19 +2,19 @@
 
 -- 8a. create the table if it doesn't exist
 
-CREATE TABLE IF NOT EXISTS scratch.page_views (LIKE scratch.page_views_test); -- change to derived.page_views
+CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_views (LIKE {{.output_schema}}.page_views);
 
--- 8b. change the owner to storageloader in case another user runs this step
+-- 8b. change the owner to {{.datamodeling_user}} in case another user runs this step
 
---ALTER TABLE scratch.page_views OWNER TO storageloader;
+ALTER TABLE {{.scratch_schema}}.page_views OWNER TO {{.datamodeling_user}};
 
 -- 8c. truncate in case the previous run failed
 
-TRUNCATE scratch.page_views;
+TRUNCATE {{.scratch_schema}}.page_views;
 
 -- 8d. combine the part table into a single view
 
-INSERT INTO scratch.page_views (
+INSERT INTO {{.scratch_schema}}.page_views (
 
   SELECT
 
@@ -130,12 +130,12 @@ INSERT INTO scratch.page_views (
     er.exit,
     er.new_user
 
-  FROM scratch.page_view_events AS ev
+  FROM {{.scratch_schema}}.page_view_events AS ev
 
-  LEFT JOIN scratch.page_view_time AS et
+  LEFT JOIN {{.scratch_schema}}.page_view_time AS et
     ON ev.page_view_id = et.page_view_id
 
-  LEFT JOIN scratch.page_view_rank AS er
+  LEFT JOIN {{.scratch_schema}}.page_view_rank AS er
     ON ev.page_view_id = er.page_view_id
 
   WHERE ev.useragent NOT SIMILAR TO '%(bot|crawl|slurp|spider|archiv|spinn|sniff|seo|audit|survey|pingdom|worm|capture|(browser|screen)shots|analyz|index|thumb|check|facebook|PingdomBot|PhantomJS|YandexBot|Twitterbot|a_archiver|facebookexternalhit|Bingbot|BingPreview|Googlebot|Baiduspider|360(Spider|User-agent)|semalt)%'
