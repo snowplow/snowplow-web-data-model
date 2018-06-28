@@ -8,7 +8,7 @@
 
 The contents of this folder are as follows:
 
-* This `README.md` and the `LICENSE-2.0.txt` Apache license file
+* This `README.md` file
 * `web-block` with the Looker Block for users on Looker 4
 * `web-block-old-lookml` with the Looker Block for users on Looker 3
 
