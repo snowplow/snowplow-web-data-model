@@ -21,7 +21,7 @@
   "supported": {
     "databases": "Redshift",
     "software": ["sql-runner", "looker"]
-  }
+  },
   "description": "Snowplow web data model",
   "repository": {
     "type": "git",
