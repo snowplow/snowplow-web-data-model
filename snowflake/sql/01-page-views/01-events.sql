@@ -15,7 +15,7 @@
 -- Copyright:   Copyright (c) 2018 Snowplow Analytics Ltd
 -- License:     Apache License Version 2.0
 
-CREATE OR REPLACE TABLE snowplow_analytics.scratch.web_events
+CREATE OR REPLACE TABLE scratch.web_events
 AS (
 WITH step1 AS(
   SELECT

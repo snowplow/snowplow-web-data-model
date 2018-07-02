@@ -194,7 +194,7 @@ SELECT
   a.device_is_mobile
 
 FROM
-  web.page_views_test AS a
+  web.page_views_tmp AS a
 INNER JOIN prep AS b
   ON a.session_id = b.session_id
 
