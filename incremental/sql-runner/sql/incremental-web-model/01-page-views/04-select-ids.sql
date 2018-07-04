@@ -17,20 +17,20 @@ SORTKEY(collector_tstamp);
 
 TRUNCATE {{.scratch_schema}}.ids;
 
--- 4c. insert all event ID and timestamp that have not been processed
+-- 4c. insert all event ID and timestamp that have to be processed
 
 INSERT INTO {{.scratch_schema}}.ids (
-
-		SELECT
-			root_id,
-			root_tstamp,
-			id
-		FROM
-      {{.input_schema}}.com_snowplowanalytics_snowplow_web_page_1
-		WHERE
-      id IN (SELECT id FROM {{.scratch_schema}}.page_view_ids)
-			AND root_tstamp >= (SELECT MIN(collector_tstamp) FROM {{.scratch_schema}}.event_ids) -- for performance
-		GROUP BY 1, 2, 3
-	  ORDER BY 1
-
+	SELECT
+		root_id,
+		root_tstamp,
+		id
+	FROM
+    {{.input_schema}}.com_snowplowanalytics_snowplow_web_page_1
+	WHERE
+    id IN (SELECT id FROM {{.scratch_schema}}.page_view_ids)
+    AND root_tstamp <= (SELECT MAX(collector_tstamp) FROM {{.scratch_schema}}.event_ids) + INTERVAL '1 day' -- excludes timestamps "from the future";
+    -- Adding 1 day because events_id only contains page_view events but we also want to consider page_pings for the last event in the batch.
+    -- However that means that some rare timestamp outliers might get through.
+	GROUP BY 1, 2, 3
+  ORDER BY 1
 );
