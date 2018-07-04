@@ -20,6 +20,9 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_events (
   collector_tstamp TIMESTAMP ENCODE ZSTD,
   derived_tstamp TIMESTAMP ENCODE ZSTD,
 
+  -- application fields
+  app_id VARCHAR(255) ENCODE ZSTD,
+
   -- page fields
   page_title VARCHAR(2000) ENCODE ZSTD,
 
@@ -86,6 +89,7 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_events (
 
   -- row number
   row INT8 ENCODE ZSTD
+
 )
 DISTSTYLE KEY
 DISTKEY (page_view_id)
@@ -116,6 +120,9 @@ INSERT INTO {{.scratch_schema}}.page_view_events (
     ev.dvce_created_tstamp,
     ev.collector_tstamp,
     ev.derived_tstamp,
+
+    -- application fields
+    ev.app_id,
 
     -- page fields
     ev.page_title,
@@ -184,12 +191,12 @@ INSERT INTO {{.scratch_schema}}.page_view_events (
     -- row number
     ROW_NUMBER() OVER (PARTITION BY id.id ORDER BY ev.dvce_created_tstamp) AS row
 
-  FROM {{.input_schema}}.events AS ev
+  FROM
+    {{.input_schema}}.events AS ev
+    INNER JOIN {{.scratch_schema}}.ids AS id
+      ON ev.event_id = id.event_id AND ev.collector_tstamp = id.collector_tstamp
 
-  INNER JOIN {{.scratch_schema}}.ids AS id
-    ON ev.event_id = id.event_id AND ev.collector_tstamp = id.collector_tstamp
-
-  WHERE ev.event_name = 'page_view'
-    AND ev.collector_tstamp >= (SELECT MIN(collector_tstamp) FROM {{.scratch_schema}}.event_ids) -- for performance
+  WHERE
+    ev.event_name = 'page_view'
 
 );
