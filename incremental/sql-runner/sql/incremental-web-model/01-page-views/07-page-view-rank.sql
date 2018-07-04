@@ -3,7 +3,6 @@
 -- 7a. create the table if it doesn't exist
 
 CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_rank (
-
   session_id CHAR(36) ENCODE ZSTD,
   session_index INT ENCODE ZSTD,
 
@@ -17,7 +16,6 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_rank (
   entrance INT4 ENCODE ZSTD,
   exit INT4 ENCODE ZSTD,
   new_user INT4 ENCODE ZSTD
-
 )
 DISTSTYLE KEY
 DISTKEY (page_view_id)

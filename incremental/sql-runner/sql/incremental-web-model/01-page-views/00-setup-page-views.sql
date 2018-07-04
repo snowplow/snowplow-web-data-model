@@ -1,5 +1,4 @@
 CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views (
-
   page_view_id CHAR(36) ENCODE ZSTD NOT NULL,
 
   -- user fields
@@ -62,7 +61,7 @@ CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views (
   geo_city VARCHAR(75) ENCODE ZSTD,
   geo_zipcode VARCHAR(15) ENCODE ZSTD,
   geo_latitude DOUBLE PRECISION ENCODE ZSTD,
-	geo_longitude DOUBLE PRECISION ENCODE ZSTD,
+  geo_longitude DOUBLE PRECISION ENCODE ZSTD,
   geo_timezone VARCHAR(64) ENCODE ZSTD,
 
   -- IP address
@@ -116,7 +115,6 @@ CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views (
   vertical_percentage_scrolled DOUBLE PRECISION ENCODE ZSTD,
 
   CONSTRAINT page_view_id_pk PRIMARY KEY(page_view_id)
-
 )
 DISTSTYLE KEY
 DISTKEY (page_view_id)

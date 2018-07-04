@@ -3,7 +3,7 @@
 -- 1a. create the table if it doesn't exist
 
 CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.user_session_ids (
-	session_id CHAR(128) ENCODE ZSTD NOT NULL,
+  session_id CHAR(128) ENCODE ZSTD NOT NULL,
   CONSTRAINT {{.scratch_schema}}_user_session_ids_pk PRIMARY KEY(session_id)
 )
 DISTKEY(session_id)
@@ -21,11 +21,11 @@ INSERT INTO {{.scratch_schema}}.user_session_ids (
     SELECT
       session_id,
       domain_userid
-  	FROM
+    FROM
       {{.output_schema}}.sessions
     WHERE
       session_start_time NOT IN (SELECT session_start_time FROM {{.output_schema}}.users_manifest)
-  		AND session_start_time < (SELECT MAX(session_start_time) FROM {{.output_schema}}.users_manifest) + INTERVAL '{{.update_cadence}}'
+      AND session_start_time < (SELECT MAX(session_start_time) FROM {{.output_schema}}.users_manifest) + INTERVAL '{{.update_cadence}}'
     GROUP BY 1, 2
     ORDER BY 1
   ),

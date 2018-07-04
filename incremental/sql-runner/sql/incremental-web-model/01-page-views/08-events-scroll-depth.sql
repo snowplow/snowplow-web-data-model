@@ -3,7 +3,6 @@
 -- 8a. create the table if it doesn't exist
 
 CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.events_scroll_depth (
-
   page_view_id CHAR(36) ENCODE ZSTD NOT NULL,
 
   doc_width INT ENCODE ZSTD,
@@ -21,7 +20,6 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.events_scroll_depth (
   relative_hmax DOUBLE PRECISION ENCODE ZSTD,
   relative_vmin DOUBLE PRECISION ENCODE ZSTD,
   relative_vmax DOUBLE PRECISION ENCODE ZSTD
-
 )
 DISTSTYLE KEY
 DISTKEY (page_view_id)

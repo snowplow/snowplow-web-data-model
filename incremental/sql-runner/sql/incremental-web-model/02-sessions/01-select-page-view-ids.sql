@@ -3,7 +3,7 @@
 -- 1a. create the table if it doesn't exist
 
 CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.session_page_view_ids (
-	page_view_id CHAR(36) ENCODE ZSTD NOT NULL,
+  page_view_id CHAR(36) ENCODE ZSTD NOT NULL,
   CONSTRAINT {{.scratch_schema}}_session_page_view_ids_pk PRIMARY KEY(page_view_id)
 )
 DISTKEY(page_view_id)
@@ -21,11 +21,11 @@ INSERT INTO {{.scratch_schema}}.session_page_view_ids (
     SELECT
       page_view_id,
       session_id
-  	FROM
+    FROM
       {{.output_schema}}.page_views
     WHERE
       page_view_start_time NOT IN (SELECT page_view_start_time FROM {{.output_schema}}.sessions_manifest)
-  		AND page_view_start_time < (SELECT MAX(page_view_start_time) FROM {{.output_schema}}.sessions_manifest) + INTERVAL '{{.update_cadence}}'
+      AND page_view_start_time < (SELECT MAX(page_view_start_time) FROM {{.output_schema}}.sessions_manifest) + INTERVAL '{{.update_cadence}}'
     GROUP BY 1, 2
     ORDER BY 1
   ),

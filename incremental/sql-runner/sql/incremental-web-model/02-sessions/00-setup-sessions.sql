@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS {{.output_schema}}.sessions (
   geo_city VARCHAR(75) ENCODE ZSTD,
   geo_zipcode VARCHAR(15) ENCODE ZSTD,
   geo_latitude DOUBLE PRECISION ENCODE ZSTD,
-	geo_longitude DOUBLE PRECISION ENCODE ZSTD,
+  geo_longitude DOUBLE PRECISION ENCODE ZSTD,
   geo_timezone VARCHAR(64) ENCODE ZSTD,
 
   -- IP address

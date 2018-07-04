@@ -4,7 +4,7 @@
 
 -- Create the table if it doesn't exist
 CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views_manifest (
-	etl_tstamp TIMESTAMP ENCODE ZSTD,
+  etl_tstamp TIMESTAMP ENCODE ZSTD,
   CONSTRAINT {{.output_schema}}_page_views_manifest_pk PRIMARY KEY(etl_tstamp)
 )
 DISTSTYLE ALL

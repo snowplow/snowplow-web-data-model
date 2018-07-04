@@ -3,7 +3,7 @@
 -- 3a. create the table if it doesn't exist
 
 CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_ids (
-	id CHAR(36) ENCODE ZSTD,
+  id CHAR(36) ENCODE ZSTD,
   CONSTRAINT {{.scratch_schema}}_page_view_ids_pk PRIMARY KEY(id)
 )
 DISTSTYLE ALL
@@ -17,13 +17,13 @@ TRUNCATE {{.scratch_schema}}.page_view_ids;
 
 INSERT INTO {{.scratch_schema}}.page_view_ids (
   WITH new_batch AS ( -- Select the page view IDs of all events that are in the current batch
-  	SELECT
+    SELECT
       id
-  	FROM
+    FROM
       {{.input_schema}}.com_snowplowanalytics_snowplow_web_page_1
-  	WHERE
+    WHERE
       root_id || root_tstamp IN (SELECT event_id || collector_tstamp FROM {{.scratch_schema}}.event_ids)
-  		AND root_tstamp >= (SELECT MIN(collector_tstamp) FROM {{.scratch_schema}}.event_ids) -- for performance
+      AND root_tstamp >= (SELECT MIN(collector_tstamp) FROM {{.scratch_schema}}.event_ids) -- for performance
     GROUP BY 1
     ORDER BY 1
   ),

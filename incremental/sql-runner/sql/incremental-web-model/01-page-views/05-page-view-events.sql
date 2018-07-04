@@ -3,7 +3,6 @@
 -- 5a. create the table if it doesn't exist
 
 CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_events (
-
   page_view_id CHAR(36) ENCODE ZSTD NOT NULL,
 
   -- user fields
@@ -60,7 +59,7 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_events (
   geo_city VARCHAR(75) ENCODE ZSTD,
   geo_zipcode VARCHAR(15) ENCODE ZSTD,
   geo_latitude DOUBLE PRECISION ENCODE ZSTD,
-	geo_longitude DOUBLE PRECISION ENCODE ZSTD,
+  geo_longitude DOUBLE PRECISION ENCODE ZSTD,
   geo_timezone VARCHAR(64) ENCODE ZSTD,
 
   -- IP address
@@ -89,7 +88,6 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_events (
 
   -- row number
   row INT8 ENCODE ZSTD
-
 )
 DISTSTYLE KEY
 DISTKEY (page_view_id)
@@ -102,9 +100,7 @@ TRUNCATE {{.scratch_schema}}.page_view_events;
 -- 5c. insert the dimensions for page views that have not been processed
 
 INSERT INTO {{.scratch_schema}}.page_view_events (
-
   SELECT
-
     id.id,
 
     -- user fields
@@ -198,5 +194,4 @@ INSERT INTO {{.scratch_schema}}.page_view_events (
 
   WHERE
     ev.event_name = 'page_view'
-
 );
