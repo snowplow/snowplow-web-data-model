@@ -16,6 +16,9 @@ CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views (
   collector_tstamp TIMESTAMP ENCODE ZSTD,
   derived_tstamp TIMESTAMP ENCODE ZSTD,
 
+  -- application fields
+  app_id VARCHAR(255) ENCODE ZSTD,
+
   -- page fields
   page_title VARCHAR(2000) ENCODE ZSTD,
 
@@ -24,6 +27,9 @@ CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views (
   page_urlhost VARCHAR(255) ENCODE ZSTD,
   page_urlpath VARCHAR(3000) ENCODE ZSTD,
   page_urlquery VARCHAR(6000) ENCODE ZSTD,
+
+  doc_width INT ENCODE ZSTD,
+  doc_height INT ENCODE ZSTD,
 
   -- referrer fields
   page_referrer VARCHAR(4096) ENCODE ZSTD,
@@ -73,6 +79,9 @@ CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views (
   --br_renderengine VARCHAR(50) ENCODE ZSTD,
   br_lang VARCHAR(255) ENCODE ZSTD,
 
+  br_viewwidth INT ENCODE ZSTD,
+  br_viewheight INT ENCODE ZSTD,
+
   -- device fields
   dvce_type VARCHAR(50) ENCODE ZSTD,
   dvce_ismobile BOOLEAN ENCODE ZSTD,
@@ -84,6 +93,7 @@ CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views (
   --os_timezone VARCHAR(255) ENCODE ZSTD,
 
   -- timestamp fields
+  page_view_start_date VARCHAR(18) ENCODE ZSTD,
   page_view_start_time TIMESTAMP ENCODE ZSTD,
   page_view_end_time TIMESTAMP ENCODE ZSTD,
   page_view_min_dvce_created_tstamp TIMESTAMP ENCODE ZSTD,
@@ -99,7 +109,14 @@ CREATE TABLE IF NOT EXISTS {{.output_schema}}.page_views (
   exit INT4 ENCODE ZSTD,
   new_user INT4 ENCODE ZSTD,
 
+  horizontal_pixels_scrolled INT ENCODE ZSTD,
+  vertical_pixels_scrolled INT ENCODE ZSTD,
+
+  horizontal_percentage_scrolled DOUBLE PRECISION ENCODE ZSTD,
+  vertical_percentage_scrolled DOUBLE PRECISION ENCODE ZSTD,
+
   CONSTRAINT page_view_id_pk PRIMARY KEY(page_view_id)
+
 )
 DISTSTYLE KEY
 DISTKEY (page_view_id)
