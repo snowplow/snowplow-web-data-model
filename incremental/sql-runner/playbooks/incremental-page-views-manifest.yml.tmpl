@@ -11,8 +11,8 @@
     :output_schema: # insert schema name (default: derived)
     :start_date:    # insert start date (must be a valid Redshift DATE, eg 2018-01-01)
 :steps:
-  - :name: 00-setup-manifest
+  - :name: 00-setup-page-views-manifest
     :queries:
-      - :name: 00-setup-manifest
-        :file: incremental-web-model/00-setup/00-setup-manifest.sql
+      - :name: 00-setup-page-views-manifest
+        :file: incremental-web-model/00-setup/00-setup-page-views-manifest.sql
         :template: true
