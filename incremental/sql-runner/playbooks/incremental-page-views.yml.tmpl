@@ -1,0 +1,95 @@
+:targets:
+  - :name:           # insert name
+    :type:           redshift
+    :host:           # insert host
+    :database:       # insert database name (default: snowplow)
+    :port:           # insert database port (default: 5439)
+    :username:       # insert Redshift user name (default: datamodeling)
+    :password:       # insert Redshift user password
+:variables:
+    :input_schema:   # insert schema name (default: atomic)
+    :scratch_schema: # insert schema name (default: scratch)
+    :output_schema:  # insert schema name (default: derived)
+    :update_cadence: # insert time period (must be a valid Redshift INTERVAL, eg 1 week)
+    :start_date:     # insert start date (must be a valid Redshift DATE, eg 2018-01-01)
+:steps:
+  - :name: 00-setup-page-views
+    :queries:
+      - :name: 00-setup-page-views
+        :file: incremental-web-model/01-page-views/00-setup-page-views.sql
+        :template: true
+  - :name: 01-select-etl-tstamps
+    :queries:
+      - :name: 01-select-etl-tstamps
+        :file: incremental-web-model/01-page-views/01-select-etl-tstamps.sql
+        :template: true
+  - :name: 02-select-event-ids
+    :queries:
+      - :name: 02-select-event-ids
+        :file: incremental-web-model/01-page-views/02-select-event-ids.sql
+        :template: true
+  - :name: 03-select-page-view-ids
+    :queries:
+      - :name: 03-select-page-view-ids
+        :file: incremental-web-model/01-page-views/03-select-page-view-ids.sql
+        :template: true
+  - :name: 04-select-ids
+    :queries:
+      - :name: 04-select-ids
+        :file: incremental-web-model/01-page-views/04-select-ids.sql
+        :template: true
+  - :name: 05-page-view-events
+    :queries:
+      - :name: 05-page-view-events
+        :file: incremental-web-model/01-page-views/05-page-view-events.sql
+        :template: true
+  - :name: 06-page-view-time
+    :queries:
+      - :name: 06-page-view-time
+        :file: incremental-web-model/01-page-views/06-page-view-time.sql
+        :template: true
+  - :name: 07-page-view-rank
+    :queries:
+      - :name: 07-page-view-rank
+        :file: incremental-web-model/01-page-views/07-page-view-rank.sql
+        :template: true
+  - :name: 08-events-scroll-depth
+    :queries:
+      - :name: 08-events-scroll-depth
+        :file: incremental-web-model/01-page-views/08-events-scroll-depth.sql
+        :template: true
+  - :name: 09-page-views
+    :queries:
+      - :name: 09-page-views
+        :file: incremental-web-model/01-page-views/09-page-views.sql
+        :template: true
+  - :name: 10-delete-page-views
+    :queries:
+      - :name: 10-delete-page-views
+        :file: incremental-web-model/01-page-views/10-delete-page-views.sql
+        :template: true
+  - :name: 11-append-page-views
+    :queries:
+      - :name: 11-append-page-views
+        :file: incremental-web-model/01-page-views/11-append-page-views.sql
+        :template: true
+  - :name: 12-append-manifest
+    :queries:
+      - :name: 12-append-manifest
+        :file: incremental-web-model/01-page-views/12-append-manifest.sql
+        :template: true
+  - :name: 13-cleanup
+    :queries:
+      - :name: 13-cleanup
+        :file: incremental-web-model/01-page-views/13-cleanup.sql
+        :template: true
+  - :name: 14-vacuum
+    :queries:
+      - :name: 14-vacuum
+        :file: incremental-web-model/01-page-views/14-vacuum.sql
+        :template: true
+  - :name: 15-analyze
+    :queries:
+      - :name: 15-analyze
+        :file: incremental-web-model/01-page-views/15-analyze.sql
+        :template: true
