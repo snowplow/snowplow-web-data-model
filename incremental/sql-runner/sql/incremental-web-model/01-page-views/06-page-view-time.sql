@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_time (
   max_dvce_created_tstamp TIMESTAMP ENCODE ZSTD,
 
   time_engaged_in_s INT8 ENCODE ZSTD
+
 )
 DISTSTYLE KEY
 DISTKEY (page_view_id)
@@ -22,7 +23,7 @@ SORTKEY (page_view_id);
 
 TRUNCATE {{.scratch_schema}}.page_view_time;
 
--- 6c. insert the dimensions for page views that have not been processed
+-- 6c. insert the dimensions
 
 INSERT INTO {{.scratch_schema}}.page_view_time (
 
@@ -38,13 +39,13 @@ INSERT INTO {{.scratch_schema}}.page_view_time (
 
     30 * COUNT(DISTINCT(FLOOR(EXTRACT(EPOCH FROM ev.derived_tstamp)/30))) - 30 AS time_engaged_in_s -- assumes 30 seconds between page pings
 
-	FROM {{.input_schema}}.events AS ev
+	FROM
+    {{.input_schema}}.events AS ev
+    INNER JOIN {{.scratch_schema}}.ids AS id
+		  ON ev.event_id = id.event_id AND ev.collector_tstamp = id.collector_tstamp
 
-	INNER JOIN {{.scratch_schema}}.ids AS id
-		ON ev.event_id = id.event_id AND ev.collector_tstamp = id.collector_tstamp
-
-	WHERE ev.event_name IN ('page_view', 'page_ping')
-    AND ev.collector_tstamp >= (SELECT MIN(collector_tstamp) FROM {{.scratch_schema}}.event_ids) -- for performance
+	WHERE
+    ev.event_name IN ('page_view', 'page_ping')
 
   GROUP BY 1
 
