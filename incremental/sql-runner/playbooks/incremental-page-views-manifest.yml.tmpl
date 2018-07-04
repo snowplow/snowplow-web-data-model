@@ -9,7 +9,7 @@
 :variables:
     :input_schema:  # insert schema name (default: atomic)
     :output_schema: # insert schema name (default: derived)
-    :start_date:    # insert start date
+    :start_date:    # insert start date (must be a valid Redshift DATE, eg 2018-01-01)
 :steps:
   - :name: 00-setup-manifest
     :queries:
