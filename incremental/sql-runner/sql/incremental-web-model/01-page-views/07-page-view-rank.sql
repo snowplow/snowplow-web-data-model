@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_view_rank (
   entrance INT4 ENCODE ZSTD,
   exit INT4 ENCODE ZSTD,
   new_user INT4 ENCODE ZSTD
+
 )
 DISTSTYLE KEY
 DISTKEY (page_view_id)
@@ -26,82 +27,36 @@ SORTKEY (page_view_id);
 
 TRUNCATE {{.scratch_schema}}.page_view_rank;
 
--- 7c. insert the dimensions for page views that have not been processed
+-- 7c. insert the dimensions
 
 INSERT INTO {{.scratch_schema}}.page_view_rank (
-
-  WITH new_page_views AS (
-
-    -- select all page views in the current processing batch
-
+  WITH prep AS (
     SELECT
-      session_id,
-      session_index,
-      page_view_id,
-      derived_tstamp
+      ev.session_id,
+      ev.session_index,
+      ev.page_view_id,
+      et.min_derived_tstamp AS derived_tstamp,
+      ROW_NUMBER() OVER (PARTITION BY ev.session_id ORDER BY et.min_derived_tstamp) AS page_view_in_session_index,
+      COUNT(*) OVER (PARTITION BY ev.session_id) AS page_views_in_session
     FROM
-      {{.scratch_schema}}.page_view_events
+      {{.scratch_schema}}.page_view_events AS ev
+      INNER JOIN {{.scratch_schema}}.page_view_time AS et
+        ON ev.page_view_id = et.page_view_id
     WHERE
-      row = 1
-
-  ),
-
-  remaining_page_views AS (
-
-  -- select all page views that belong to sessions that are being
-  -- processed in the current batch, but have no new events in
-  -- this batch (i.e. are complete)
-
-  SELECT
-    session_id,
-    session_index,
-    page_view_id,
-    derived_tstamp
-  FROM
-    {{.output_schema}}.page_views
-  WHERE
-    session_id IN (SELECT DISTINCT session_id FROM new_page_views)
-    AND page_view_id NOT IN (SELECT page_view_id FROM new_page_views)
-
-  ),
-
-  sessions AS (
-
-  -- union both views to get all page views for the sessions
-  -- with at least one page view in the current batch
-
-  SELECT * FROM new_page_views
-    UNION
-  SELECT * FROM remaining_page_views
-
-  ),
-
-  rank_page_views AS (
+      ev.row = 1
+  )
 
   SELECT
     session_id,
     session_index,
     page_view_id,
     derived_tstamp,
-    ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY derived_tstamp) AS page_view_in_session_index,
-    COUNT(*) OVER (PARTITION BY session_id) AS page_views_in_session
+    page_view_in_session_index,
+    page_views_in_session,
+    CASE WHEN page_view_in_session_index = 1 AND page_views_in_session = 1 THEN 1 ELSE 0 END AS bounce,
+    CASE WHEN page_view_in_session_index = 1 THEN 1 ELSE 0 END AS entrance,
+    CASE WHEN page_view_in_session_index = page_views_in_session THEN 1 ELSE 0 END AS exit,
+    CASE WHEN session_index = 1 AND page_view_in_session_index = 1 THEN 1 ELSE 0 END AS new_user
   FROM
-    sessions
-
-  )
-
-SELECT
-  session_id,
-  session_index,
-  page_view_id,
-  derived_tstamp,
-  page_view_in_session_index,
-  page_views_in_session,
-  CASE WHEN page_view_in_session_index = 1 AND page_views_in_session = 1 THEN 1 ELSE 0 END AS bounce,
-  CASE WHEN page_view_in_session_index = 1 THEN 1 ELSE 0 END AS entrance,
-  CASE WHEN page_view_in_session_index = page_views_in_session THEN 1 ELSE 0 END AS exit,
-  CASE WHEN session_index = 1 AND page_view_in_session_index = 1 THEN 1 ELSE 0 END AS new_user
-FROM
-  rank_page_views
-
+    prep
 );
