@@ -1,18 +1,18 @@
 :targets:
-  - :name:     # insert name
-    :type:     redshift
-    :host:     # insert host
-    :database: # insert database name (default: snowplow)
-    :port:     # insert database port (default: 5439)
-    :username: # insert Redshift user name (default: datamodeling)
-    :password: # insert Redshift user password
+  - :name:          # insert name
+    :type:          redshift
+    :host:          # insert host
+    :database:      # insert database name (default: snowplow)
+    :port:          # insert database port (default: 5439)
+    :username:      # insert Redshift user name (default: datamodeling)
+    :password:      # insert Redshift user password
 :variables:
-    :input_schema: atomic
-    :output_schema: derived
-    :start_date: # insert start date
+    :input_schema:  # insert schema name (default: atomic)
+    :output_schema: # insert schema name (default: derived)
+    :start_date:    # insert start date
 :steps:
-  - :name: 00-setup-manifest.sql
+  - :name: 00-setup-manifest
     :queries:
-      - :name: 00-setup-manifest.sql
-        :file: 00-setup/00-setup-manifest.sql
+      - :name: 00-setup-manifest
+        :file: incremental-web-model/00-setup/00-setup-manifest.sql
         :template: true
