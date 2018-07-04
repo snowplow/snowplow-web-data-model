@@ -1,19 +1,17 @@
--- 8. COMBINE INTO A SINGLE TABLE
+-- 9. COMBINE INTO A SINGLE TABLE
 
--- 8a. create the table if it doesn't exist
+-- 9a. create the table if it doesn't exist
 
 CREATE TABLE IF NOT EXISTS {{.scratch_schema}}.page_views (LIKE {{.output_schema}}.page_views);
 
--- 8b. truncate in case the previous run failed
+-- 9b. truncate in case the previous run failed
 
 TRUNCATE {{.scratch_schema}}.page_views;
 
--- 8c. combine the part table into a single view
+-- 9c. combine the part table into a single view
 
 INSERT INTO {{.scratch_schema}}.page_views (
-
   SELECT
-
     ev.page_view_id,
 
     -- ID fields
@@ -30,6 +28,9 @@ INSERT INTO {{.scratch_schema}}.page_views (
     ev.collector_tstamp,
     ev.derived_tstamp,
 
+    -- application fields
+    ev.app_id,
+
     -- page fields
     ev.page_title,
 
@@ -38,6 +39,9 @@ INSERT INTO {{.scratch_schema}}.page_views (
     ev.page_urlhost,
     ev.page_urlpath,
     ev.page_urlquery,
+
+    sc.doc_width,
+    sc.doc_height,
 
     -- referrer fields
     ev.page_referrer,
@@ -62,7 +66,6 @@ INSERT INTO {{.scratch_schema}}.page_views (
 
     -- derived channels
     CASE
-
       WHEN ev.refr_medium IS NULL AND ev.page_url NOT ILIKE '%utm_%' THEN 'Direct'
       WHEN (ev.refr_medium = 'search' AND ev.mkt_medium IS NULL) OR (ev.refr_medium = 'search' AND ev.mkt_medium = 'organic') THEN 'Organic search'
       WHEN ev.refr_medium = 'social' OR ev.mkt_medium SIMILAR TO '%(social|social-network|social-media|sm|social network|social media)%' THEN 'Social'
@@ -73,7 +76,6 @@ INSERT INTO {{.scratch_schema}}.page_views (
       WHEN ev.mkt_medium SIMILAR TO '%(cpv|cpa|cpp|content-text)%' THEN 'Other advertising'
       WHEN ev.mkt_medium SIMILAR TO '%(display|cpm|banner)%' THEN 'Display'
       ELSE 'Other'
-
     END AS channel,
 
     -- geo fields
@@ -100,6 +102,9 @@ INSERT INTO {{.scratch_schema}}.page_views (
     --ev.br_renderengine,
     ev.br_lang,
 
+    sc.br_viewwidth,
+    sc.br_viewheight,
+
     -- device fields
     ev.dvce_type,
     ev.dvce_ismobile,
@@ -111,6 +116,7 @@ INSERT INTO {{.scratch_schema}}.page_views (
     --ev.os_timezone,
 
     -- timestamp fields
+    TO_CHAR(et.min_derived_tstamp, 'YYYY-MM-DD') AS page_view_start_date,
     et.min_derived_tstamp AS page_view_start_time,
     et.max_derived_tstamp AS page_view_end_time,
     et.min_dvce_created_tstamp AS page_view_min_dvce_created_tstamp,
@@ -124,20 +130,30 @@ INSERT INTO {{.scratch_schema}}.page_views (
     er.bounce,
     er.entrance,
     er.exit,
-    er.new_user
+    er.new_user,
 
-  FROM {{.scratch_schema}}.page_view_events AS ev
+    sc.hmax AS horizontal_pixels_scrolled,
+    sc.vmax AS vertical_pixels_scrolled,
 
-  LEFT JOIN {{.scratch_schema}}.page_view_time AS et
-    ON ev.page_view_id = et.page_view_id
+    sc.relative_hmax AS horizontal_percentage_scrolled,
+    sc.relative_vmax AS vertical_percentage_scrolled
 
-  LEFT JOIN {{.scratch_schema}}.page_view_rank AS er
-    ON ev.page_view_id = er.page_view_id
+  FROM
+    {{.scratch_schema}}.page_view_events AS ev
 
-  WHERE ev.useragent NOT SIMILAR TO '%(bot|crawl|slurp|spider|archiv|spinn|sniff|seo|audit|survey|pingdom|worm|capture|(browser|screen)shots|analyz|index|thumb|check|facebook|PingdomBot|PhantomJS|YandexBot|Twitterbot|a_archiver|facebookexternalhit|Bingbot|BingPreview|Googlebot|Baiduspider|360(Spider|User-agent)|semalt)%'
+    LEFT JOIN {{.scratch_schema}}.page_view_time AS et
+      ON ev.page_view_id = et.page_view_id
+
+    LEFT JOIN {{.scratch_schema}}.page_view_rank AS er
+      ON ev.page_view_id = er.page_view_id
+
+    LEFT JOIN {{.scratch_schema}}.events_scroll_depth AS sc
+      ON ev.page_view_id = sc.page_view_id
+
+  WHERE
+    ev.useragent NOT SIMILAR TO '%(bot|crawl|slurp|spider|archiv|spinn|sniff|seo|audit|survey|pingdom|worm|capture|(browser|screen)shots|analyz|index|thumb|check|facebook|PingdomBot|PhantomJS|YandexBot|Twitterbot|a_archiver|facebookexternalhit|Bingbot|BingPreview|Googlebot|Baiduspider|360(Spider|User-agent)|semalt)%'
     AND ev.br_family != 'Robot/Spider'
     AND ev.domain_userid IS NOT NULL  -- rare edge case
     AND ev.session_index > 0 -- rare edge case
     AND ev.row = 1
-
 );
