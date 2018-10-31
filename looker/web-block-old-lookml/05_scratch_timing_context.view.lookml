@@ -59,7 +59,6 @@
           AND pt.fetch_start IS NOT NULL AND pt.fetch_start > 0
           AND pt.domain_lookup_start IS NOT NULL AND pt.domain_lookup_start > 0
           AND pt.domain_lookup_end IS NOT NULL AND pt.domain_lookup_end > 0
-          AND pt.secure_connection_start IS NOT NULL AND pt.secure_connection_start > 0
           -- connect_start is either 0 or NULL
           AND pt.connect_end IS NOT NULL AND pt.connect_end > 0
           AND pt.request_start IS NOT NULL AND pt.request_start > 0
