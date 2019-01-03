@@ -9,7 +9,7 @@
 -- "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
 --
--- Version:     0.1.0
+-- Version:     0.1.1
 --
 -- Authors:     Christophe Bogaert
 -- Copyright:   Copyright (c) 2016 Snowplow Analytics Ltd
@@ -62,7 +62,7 @@ AS (
       AND pt.fetch_start IS NOT NULL AND pt.fetch_start > 0
       AND pt.domain_lookup_start IS NOT NULL AND pt.domain_lookup_start > 0
       AND pt.domain_lookup_end IS NOT NULL AND pt.domain_lookup_end > 0
-      AND pt.secure_connection_start IS NOT NULL AND pt.secure_connection_start > 0
+      AND pt.secure_connection_start IS NOT NULL AND pt.secure_connection_start >= 0
       -- connect_start is either 0 or NULL
       AND pt.connect_end IS NOT NULL AND pt.connect_end > 0
       AND pt.request_start IS NOT NULL AND pt.request_start > 0

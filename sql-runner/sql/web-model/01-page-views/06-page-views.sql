@@ -9,7 +9,7 @@
 -- "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
 --
--- Version:     0.1.0
+-- Version:     0.1.1
 --
 -- Authors:     Christophe Bogaert
 -- Copyright:   Copyright (c) 2016 Snowplow Analytics Ltd
@@ -215,24 +215,25 @@ AS (
 
   FROM {{.scratch_schema}}.web_events AS a -- the INNER JOIN requires that all contexts are set
 
-  INNER JOIN {{.scratch_schema}}.web_events_time AS b
+  LEFT JOIN {{.scratch_schema}}.web_events_time AS b
     ON a.page_view_id = b.page_view_id
 
-  INNER JOIN {{.scratch_schema}}.web_events_scroll_depth AS c
+  LEFT JOIN {{.scratch_schema}}.web_events_scroll_depth AS c
     ON a.page_view_id = c.page_view_id
 
-  INNER JOIN {{.scratch_schema}}.web_ua_parser_context AS d
+  LEFT JOIN {{.scratch_schema}}.web_ua_parser_context AS d
     ON a.page_view_id = d.page_view_id
 
-  INNER JOIN {{.scratch_schema}}.web_timing_context AS e
+  LEFT JOIN {{.scratch_schema}}.web_timing_context AS e
     ON a.page_view_id = e.page_view_id
 
-  WHERE a.br_family != 'Robot/Spider'
-    AND a.useragent NOT SIMILAR TO '%(bot|crawl|slurp|spider|archiv|spinn|sniff|seo|audit|survey|pingdom|worm|capture|(browser|screen)shots|analyz|index|thumb|check|facebook|PingdomBot|PhantomJS|YandexBot|Twitterbot|a_archiver|facebookexternalhit|Bingbot|BingPreview|Googlebot|Baiduspider|360(Spider|User-agent)|semalt)%'
+  WHERE
+    a.useragent NOT SIMILAR TO '%(bot|crawl|slurp|spider|archiv|spinn|sniff|seo|audit|survey|pingdom|worm|capture|(browser|screen)shots|analyz|index|thumb|check|facebook|PingdomBot|PhantomJS|YandexBot|Twitterbot|a_archiver|facebookexternalhit|Bingbot|BingPreview|Googlebot|Baiduspider|360(Spider|User-agent)|semalt)%'
     AND a.domain_userid IS NOT NULL -- rare edge case
     AND a.domain_sessionidx > 0 -- rare edge case
     -- AND a.app_id IN ('demo-app')
     -- AND a.page_urlhost IN ('website.com', 'another.website.com')
     -- AND a.name_tracker = 'namespace'
+    -- AND a.br_family != 'Robot/Spider' -- include this condition only if user agent utils enrichment enabled
 
 );
