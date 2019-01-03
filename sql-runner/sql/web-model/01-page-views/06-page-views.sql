@@ -9,7 +9,7 @@
 -- "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
 --
--- Version:     0.1.0
+-- Version:     0.1.1
 --
 -- Authors:     Christophe Bogaert
 -- Copyright:   Copyright (c) 2016 Snowplow Analytics Ltd
@@ -215,13 +215,13 @@ AS (
 
   FROM {{.scratch_schema}}.web_events AS a -- the INNER JOIN requires that all contexts are set
 
-  INNER JOIN {{.scratch_schema}}.web_events_time AS b
+  LEFT JOIN {{.scratch_schema}}.web_events_time AS b
     ON a.page_view_id = b.page_view_id
 
-  INNER JOIN {{.scratch_schema}}.web_events_scroll_depth AS c
+  LEFT JOIN {{.scratch_schema}}.web_events_scroll_depth AS c
     ON a.page_view_id = c.page_view_id
 
-  INNER JOIN {{.scratch_schema}}.web_ua_parser_context AS d
+  LEFT JOIN {{.scratch_schema}}.web_ua_parser_context AS d
     ON a.page_view_id = d.page_view_id
 
   LEFT JOIN {{.scratch_schema}}.web_timing_context AS e

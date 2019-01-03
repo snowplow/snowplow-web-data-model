@@ -107,7 +107,9 @@ To be able to run the model 'as is' and take full advantage of all options, you 
 
 You must be using version 2.5.0+ of the JavaScript tracker for the web page context to work. This context is required and you will not be able to use the model without it.
 
-The performance timing context, and the referer parser, ua parser and campaign attribution enrichments are optional. You will still be able to use the model without them but you will have to comment out the relevant parts from the SQL code.
+The performance timing context, and the referer parser, ua parser and campaign attribution enrichments are optional. You will still be able to use the model without them but you will have to comment out the relevant parts from the SQL code. 
+
+The [user agent utils enrichment](https://github.com/snowplow/snowplow/wiki/user-agent-utils-enrichment) has been depracated but if you have enabled it manually, you can include an additional filter (currently commented out) on the `br_family` field which is populated by this enrichment. 
 
 By default, the model uses the more accurate `derived_tstamp` which makes allowance for inaccurate device clocks. This timestamp is only available in version 2.6.0+ of the JavaScript tracker and Snowplow 71+. If you are using older versions, you will need to change the relevant timestamps in the SQL files.
 
