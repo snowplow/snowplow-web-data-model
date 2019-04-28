@@ -206,13 +206,13 @@ view: page_views {
       INNER JOIN ${scratch_pv_05.SQL_TABLE_NAME} AS e
         ON a.page_view_id = e.page_view_id
 
-      WHERE a.br_family != 'Robot/Spider'
-        AND a.useragent NOT SIMILAR TO '%(bot|crawl|slurp|spider|archiv|spinn|sniff|seo|audit|survey|pingdom|worm|capture|(browser|screen)shots|analyz|index|thumb|check|facebook|PingdomBot|PhantomJS|YandexBot|Twitterbot|a_archiver|facebookexternalhit|Bingbot|BingPreview|Googlebot|Baiduspider|360(Spider|User-agent)|semalt)%'
+      WHERE a.useragent NOT SIMILAR TO '%(bot|crawl|slurp|spider|archiv|spinn|sniff|seo|audit|survey|pingdom|worm|capture|(browser|screen)shots|analyz|index|thumb|check|facebook|PingdomBot|PhantomJS|YandexBot|Twitterbot|a_archiver|facebookexternalhit|Bingbot|BingPreview|Googlebot|Baiduspider|360(Spider|User-agent)|semalt)%'
         AND a.domain_userid IS NOT NULL -- rare edge case
         AND a.domain_sessionidx > 0 -- rare edge case
         -- AND a.app_id IN ('demo-app')
         -- AND a.page_urlhost IN ('website.com', 'another.website.com')
         -- AND a.name_tracker = 'namespace'
+        -- AND a.br_family != 'Robot/Spider'
        ;;
     sql_trigger_value: SELECT COUNT(*) FROM ${scratch_pv_05.SQL_TABLE_NAME} ;;
     distribution: "user_snowplow_domain_id"
@@ -239,7 +239,6 @@ view: page_views {
     type: string
     sql: ${TABLE}.user_snowplow_crossdomain_id ;;
     group_label: "User"
-    hidden: yes
   }
 
   # Session
