@@ -107,20 +107,20 @@ view: sessions {
 
               a.page_title AS first_page_title,
 
-              -- referer
+              -- referrer
 
-              a.referer_url,
+              a.referrer_url,
 
-              a.referer_url_scheme,
-              a.referer_url_host,
-              a.referer_url_port,
-              a.referer_url_path,
-              a.referer_url_query,
-              a.referer_url_fragment,
+              a.referrer_url_scheme,
+              a.referrer_url_host,
+              a.referrer_url_port,
+              a.referrer_url_path,
+              a.referrer_url_query,
+              a.referrer_url_fragment,
 
-              a.referer_medium,
-              a.referer_source,
-              a.referer_term,
+              a.referrer_medium,
+              a.referrer_source,
+              a.referrer_term,
 
               -- marketing
 
@@ -394,68 +394,68 @@ view: sessions {
     group_label: "First Page"
   }
 
-  # Referer
+  # Referrer
 
-  dimension: referer_url {
+  dimension: referrer_url {
     type: string
-    sql: ${TABLE}.referer_url ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_url_scheme {
+  dimension: referrer_url_scheme {
     type: string
-    sql: ${TABLE}.referer_url_scheme ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_scheme ;;
+    group_label: "Referrer"
     hidden: yes
   }
 
-  dimension: referer_url_host {
+  dimension: referrer_url_host {
     type: string
-    sql: ${TABLE}.referer_url_host ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_host ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_url_port {
+  dimension: referrer_url_port {
     type: number
-    sql: ${TABLE}.referer_url_port ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_port ;;
+    group_label: "Referrer"
     hidden: yes
   }
 
-  dimension: referer_url_path {
+  dimension: referrer_url_path {
     type: string
-    sql: ${TABLE}.referer_url_path ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_path ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_url_query {
+  dimension: referrer_url_query {
     type: string
-    sql: ${TABLE}.referer_url_query ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_query ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_url_fragment {
+  dimension: referrer_url_fragment {
     type: string
-    sql: ${TABLE}.referer_url_fragment ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_fragment ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_medium {
+  dimension: referrer_medium {
     type: string
-    sql: ${TABLE}.referer_medium ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_medium ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_source {
+  dimension: referrer_source {
     type: string
-    sql: ${TABLE}.referer_source ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_source ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_term {
+  dimension: referrer_term {
     type: string
-    sql: ${TABLE}.referer_term ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_term ;;
+    group_label: "Referrer"
   }
 
   # Marketing
@@ -733,7 +733,7 @@ view: sessions {
     drill_fields: [session_count]
   }
   set: session_count{
-    fields: [session_id, session_start_date, first_page_url, referer_medium, page_view_count, total_time_engaged]
+    fields: [session_id, session_start_date, first_page_url, referrer_medium, page_view_count, total_time_engaged]
   }
 
   measure: user_count {

@@ -94,24 +94,24 @@ view: page_views {
         c.doc_width AS page_width,
         c.doc_height AS page_height,
 
-        -- referer
+        -- referrer
 
-        a.refr_urlhost || a.refr_urlpath AS referer_url,
+        a.refr_urlhost || a.refr_urlpath AS referrer_url,
 
-        a.refr_urlscheme AS referer_url_scheme,
-        a.refr_urlhost AS referer_url_host,
-        a.refr_urlport AS referer_url_port,
-        a.refr_urlpath AS referer_url_path,
-        a.refr_urlquery AS referer_url_query,
-        a.refr_urlfragment AS referer_url_fragment,
+        a.refr_urlscheme AS referrer_url_scheme,
+        a.refr_urlhost AS referrer_url_host,
+        a.refr_urlport AS referrer_url_port,
+        a.refr_urlpath AS referrer_url_path,
+        a.refr_urlquery AS referrer_url_query,
+        a.refr_urlfragment AS referrer_url_fragment,
 
         CASE
           WHEN a.refr_medium IS NULL THEN 'direct'
           WHEN a.refr_medium = 'unknown' THEN 'other'
           ELSE a.refr_medium
-        END AS referer_medium,
-        a.refr_source AS referer_source,
-        a.refr_term AS referer_term,
+        END AS referrer_medium,
+        a.refr_source AS referrer_source,
+        a.refr_term AS referrer_term,
 
         -- marketing
 
@@ -444,68 +444,68 @@ view: page_views {
     group_label: "Page"
   }
 
-  # Referer
+  # Referrer
 
-  dimension: referer_url {
+  dimension: referrer_url {
     type: string
-    sql: ${TABLE}.referer_url ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_url_scheme {
+  dimension: referrer_url_scheme {
     type: string
-    sql: ${TABLE}.referer_url_scheme ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_scheme ;;
+    group_label: "Referrer"
     hidden: yes
   }
 
-  dimension: referer_url_host {
+  dimension: referrer_url_host {
     type: string
-    sql: ${TABLE}.referer_url_host ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_host ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_url_port {
+  dimension: referrer_url_port {
     type: number
-    sql: ${TABLE}.referer_url_port ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_port ;;
+    group_label: "Referrer"
     hidden: yes
   }
 
-  dimension: referer_url_path {
+  dimension: referrer_url_path {
     type: string
-    sql: ${TABLE}.referer_url_path ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_path ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_url_query {
+  dimension: referrer_url_query {
     type: string
-    sql: ${TABLE}.referer_url_query ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_query ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_url_fragment {
+  dimension: referrer_url_fragment {
     type: string
-    sql: ${TABLE}.referer_url_fragment ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_url_fragment ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_medium {
+  dimension: referrer_medium {
     type: string
-    sql: ${TABLE}.referer_medium ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_medium ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_source {
+  dimension: referrer_source {
     type: string
-    sql: ${TABLE}.referer_source ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_source ;;
+    group_label: "Referrer"
   }
 
-  dimension: referer_term {
+  dimension: referrer_term {
     type: string
-    sql: ${TABLE}.referer_term ;;
-    group_label: "Referer"
+    sql: ${TABLE}.referrer_term ;;
+    group_label: "Referrer"
   }
 
   # Marketing
