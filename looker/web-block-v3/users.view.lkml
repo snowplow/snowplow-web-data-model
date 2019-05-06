@@ -147,7 +147,6 @@ view: users {
     type: string
     sql: ${TABLE}.user_snowplow_crossdomain_id ;;
     group_label: "User"
-    hidden: yes
   }
 
   # First Session Time

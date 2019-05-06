@@ -239,7 +239,6 @@ view: page_views {
     type: string
     sql: ${TABLE}.user_snowplow_crossdomain_id ;;
     group_label: "User"
-    hidden: yes
   }
 
   # Session
