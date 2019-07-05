@@ -7,20 +7,13 @@ view: sessions {
                 session_id,
 
                 -- time
-
                 MIN(page_view_start) AS session_start,
                 MAX(page_view_end) AS session_end,
-
                 MIN(page_view_start_local) AS session_start_local,
                 MAX(page_view_end_local) AS session_end_local,
 
                 -- engagement
-
                 COUNT(*) AS page_views,
-
-                -- SUM(CASE WHEN user_bounced THEN 1 ELSE 0 END) AS bounced_page_views,
-                -- SUM(CASE WHEN user_engaged THEN 1 ELSE 0 END) AS engaged_page_views,
-
                 SUM(time_engaged_in_s) AS time_engaged_in_s
 
               FROM ${page_views.SQL_TABLE_NAME}
@@ -33,97 +26,50 @@ view: sessions {
             SELECT
 
               -- user
-
-              a.user_custom_id,
-              a.user_snowplow_domain_id,
-              a.user_snowplow_crossdomain_id,
+              a.user_id,
+              a.domain_userid,
+              a.network_userid,
 
               -- sesssion
-
               a.session_id,
               a.session_index,
 
               -- session: time
-
               b.session_start,
               b.session_end,
 
-                -- example derived dimensions
-
-                -- TO_CHAR(b.session_start, 'YYYY-MM-DD HH24:MI:SS') AS session_time,
-                -- TO_CHAR(b.session_start, 'YYYY-MM-DD HH24:MI') AS session_minute,
-                -- TO_CHAR(b.session_start, 'YYYY-MM-DD HH24') AS session_hour,
-                -- TO_CHAR(b.session_start, 'YYYY-MM-DD') AS session_date,
-                -- TO_CHAR(DATE_TRUNC('week', b.session_start), 'YYYY-MM-DD') AS session_week,
-                -- TO_CHAR(b.session_start, 'YYYY-MM') AS session_month,
-                -- TO_CHAR(DATE_TRUNC('quarter', b.session_start), 'YYYY-MM') AS session_quarter,
-                -- DATE_PART(Y, b.session_start)::INTEGER AS session_year,
-
               -- session: time in the user's local timezone
-
               b.session_start_local,
               b.session_end_local,
 
-                -- example derived dimensions
-
-                -- TO_CHAR(b.session_start_local, 'YYYY-MM-DD HH24:MI:SS') AS session_local_time,
-                -- TO_CHAR(b.session_start_local, 'HH24:MI') AS session_local_time_of_day,
-                -- DATE_PART(hour, b.session_start_local)::INTEGER AS session_local_hour_of_day,
-                -- TRIM(TO_CHAR(b.session_start_local, 'd')) AS session_local_day_of_week,
-                -- MOD(EXTRACT(DOW FROM b.session_start_local)::INTEGER - 1 + 7, 7) AS session_local_day_of_week_index,
-
               -- engagement
-
+              b.user_bounced,
               b.page_views,
-
-              -- b.bounced_page_views,
-              -- b.engaged_page_views,
-
               b.time_engaged_in_s,
 
-                -- CASE
-                  -- WHEN b.time_engaged_in_s BETWEEN 0 AND 9 THEN '0s to 9s'
-                  -- WHEN b.time_engaged_in_s BETWEEN 10 AND 29 THEN '10s to 29s'
-                  -- WHEN b.time_engaged_in_s BETWEEN 30 AND 59 THEN '30s to 59s'
-                  -- WHEN b.time_engaged_in_s BETWEEN 60 AND 119 THEN '60s to 119s'
-                  -- WHEN b.time_engaged_in_s BETWEEN 120 AND 239 THEN '120s to 239s'
-                  -- WHEN b.time_engaged_in_s > 239 THEN '240s or more'
-                  -- ELSE NULL
-                -- END AS time_engaged_in_s_tier,
-
-                -- CASE WHEN (b.page_views = 1 AND b.bounced_page_views = 1) THEN TRUE ELSE FALSE END AS user_bounced,
-                -- CASE WHEN (b.page_views > 2 AND b.time_engaged_in_s > 59) OR b.engaged_page_views > 0 THEN TRUE ELSE FALSE END AS user_engaged,
-
               -- first page
-
               a.page_url AS first_page_url,
-
               a.page_url_scheme AS first_page_url_scheme,
               a.page_url_host AS first_page_url_host,
               a.page_url_port AS first_page_url_port,
               a.page_url_path AS first_page_url_path,
               a.page_url_query AS first_page_url_query,
               a.page_url_fragment AS first_page_url_fragment,
-
               a.page_title AS first_page_title,
 
               -- referrer
-
               a.referrer_url,
-
               a.referrer_url_scheme,
               a.referrer_url_host,
               a.referrer_url_port,
               a.referrer_url_path,
               a.referrer_url_query,
               a.referrer_url_fragment,
-
               a.referrer_medium,
               a.referrer_source,
               a.referrer_term,
 
               -- marketing
-
               a.marketing_medium,
               a.marketing_source,
               a.marketing_term,
@@ -133,7 +79,6 @@ view: sessions {
               a.marketing_network,
 
               -- location
-
               a.geo_country,
               a.geo_region,
               a.geo_region_name,
@@ -144,31 +89,25 @@ view: sessions {
               a.geo_timezone, -- can be NULL
 
               -- IP
-
               a.ip_address,
-
-              a.ip_isp,
-              a.ip_organization,
-              a.ip_domain,
-              a.ip_net_speed,
+              -- a.ip_isp,
+              -- a.ip_organization,
+              -- a.ip_domain,
+              -- a.ip_net_speed,
 
               -- application
-
               a.app_id,
 
               -- browser
-
               a.browser,
               a.browser_name,
               a.browser_major_version,
               a.browser_minor_version,
               a.browser_build_version,
               a.browser_engine,
-
               a.browser_language,
 
               -- OS
-
               a.os,
               a.os_name,
               a.os_major_version,
@@ -178,10 +117,7 @@ view: sessions {
               a.os_timezone,
 
               -- device
-
-              a.device,
-              a.device_type,
-              a.device_is_mobile
+              a.device
 
             FROM ${page_views.SQL_TABLE_NAME} AS a
 
@@ -199,21 +135,21 @@ view: sessions {
 
   # User
 
-  dimension: user_custom_id {
+  dimension: user_id {
     type: string
-    sql: ${TABLE}.user_custom_id ;;
+    sql: ${TABLE}.user_id ;;
     group_label: "User"
   }
 
-  dimension: user_snowplow_domain_id {
+  dimension: domain_userid {
     type: string
-    sql: ${TABLE}.user_snowplow_domain_id ;;
+    sql: ${TABLE}.domain_userid ;;
     group_label: "User"
   }
 
-  dimension: user_snowplow_crossdomain_id {
+  dimension: network_userid {
     type: string
-    sql: ${TABLE}.user_snowplow_crossdomain_id ;;
+    sql: ${TABLE}.network_userid ;;
     group_label: "User"
   }
 
@@ -258,33 +194,14 @@ view: sessions {
     type: time
     timeframes: [time, minute10, hour, date, week, month, quarter, year]
     sql: ${TABLE}.session_start ;;
-    #X# group_label:"Session Time"
+    group_label:"Session Time"
   }
 
   dimension_group: session_end {
     type: time
     timeframes: [time, minute10, hour, date, week, month, quarter, year]
     sql: ${TABLE}.session_end ;;
-    #X# group_label:"Session Time"
-    hidden: yes
-  }
-
-  dimension: session_start_window {
-    case: {
-      when: {
-        sql: ${session_start_time} >= DATEADD(day, -28, GETDATE()) ;;
-        label: "current_period"
-      }
-
-      when: {
-        sql: ${session_start_time} >= DATEADD(day, -56, GETDATE()) AND ${session_start_time} < DATEADD(day, -28, GETDATE()) ;;
-        label: "previous_period"
-      }
-
-      else: "unknown"
-    }
-
-    hidden: yes
+    group_label:"Session Time"
   }
 
   # Session Time (User Timezone)
@@ -293,7 +210,7 @@ view: sessions {
     type: time
     timeframes: [time, time_of_day, hour_of_day, day_of_week]
     sql: ${TABLE}.session_start_local ;;
-    #X# group_label:"Session Time (User Timezone)"
+    group_label:"Session Time (User Timezone)"
     convert_tz: no
   }
 
@@ -301,8 +218,22 @@ view: sessions {
     type: time
     timeframes: [time, time_of_day, hour_of_day, day_of_week]
     sql: ${TABLE}.session_end_local ;;
-    #X# group_label:"Session Time (User Timezone)"
+    group_label:"Session Time (User Timezone)"
     convert_tz: no
+  }
+
+  dimension: session_start_window {
+    case: {
+      when: {
+        sql: ${session_start_time} >= DATEADD(day, -28, GETDATE()) ;;
+        label: "current_period"
+      }
+      when: {
+        sql: ${session_start_time} >= DATEADD(day, -56, GETDATE()) AND ${session_start_time} < DATEADD(day, -28, GETDATE()) ;;
+        label: "previous_period"
+      }
+      else: "unknown"
+    }
     hidden: yes
   }
 
@@ -332,13 +263,13 @@ view: sessions {
 
   dimension: user_bounced {
     type: yesno
-    sql: ${page_views} = 1 AND ${time_engaged} = 0 ;;
+    sql: ${TABLE}.user_bounced ;;
     group_label: "Engagement"
   }
 
   dimension: user_engaged {
     type: yesno
-    sql: ${page_views} > 2 AND ${time_engaged} > 59 ;;
+    sql: ${TABLE}.time_engaged_in_s >= 60 AND ${TABLE}.page_views >= 3 ;;
     group_label: "Engagement"
   }
 
@@ -573,29 +504,29 @@ view: sessions {
     group_label: "IP"
   }
 
-  dimension: ip_isp {
-    type: string
-    sql: ${TABLE}.ip_isp ;;
-    group_label: "IP"
-  }
+  # dimension: ip_isp {
+    # type: string
+    # sql: ${TABLE}.ip_isp ;;
+    # group_label: "IP"
+  # }
 
-  dimension: ip_organization {
-    type: string
-    sql: ${TABLE}.ip_organization ;;
-    group_label: "IP"
-  }
+  # dimension: ip_organization {
+    # type: string
+    # sql: ${TABLE}.ip_organization ;;
+    # group_label: "IP"
+  # }
 
-  dimension: ip_domain {
-    type: string
-    sql: ${TABLE}.ip_domain ;;
-    group_label: "IP"
-  }
+  # dimension: ip_domain {
+    # type: string
+    # sql: ${TABLE}.ip_domain ;;
+    # group_label: "IP"
+  # }
 
-  dimension: ip_net_speed {
-    type: string
-    sql: ${TABLE}.ip_net_speed ;;
-    group_label: "IP"
-  }
+  # dimension: ip_net_speed {
+    # type: string
+    # sql: ${TABLE}.ip_net_speed ;;
+    # group_label: "IP"
+  # }
 
   # Application
 
@@ -701,18 +632,6 @@ view: sessions {
     group_label: "Device"
   }
 
-  dimension: device_type {
-    type: string
-    sql: ${TABLE}.device_type ;;
-    group_label: "Device"
-  }
-
-  dimension: device_is_mobile {
-    type: yesno
-    sql: ${TABLE}.device_is_mobile ;;
-    group_label: "Device"
-  }
-
   # MEASURES
 
   measure: row_count {
@@ -738,17 +657,17 @@ view: sessions {
 
   measure: user_count {
     type: count_distinct
-    sql: ${user_snowplow_domain_id} ;;
+    sql: ${domain_userid} ;;
     group_label: "Counts"
     drill_fields: [user_count]
   }
   set: user_count{
-    fields: [user_snowplow_domain_id, users.first_page_url, session_count, average_time_engaged, total_time_engaged]
+    fields: [domain_userid, users.first_page_url, session_count, average_time_engaged, total_time_engaged]
   }
 
   measure: new_user_count {
     type: count_distinct
-    sql: ${user_snowplow_domain_id} ;;
+    sql: ${domain_userid} ;;
 
     filters: {
       field: session_index
@@ -759,27 +678,15 @@ view: sessions {
     drill_fields: [new_user_count]
   }
   set: new_user_count{
-    fields: [user_snowplow_domain_id, users.first_page_url, session_count, average_time_engaged, total_time_engaged]
+    fields: [domain_userid, users.first_page_url, session_count, average_time_engaged, total_time_engaged]
   }
 
   measure: bounced_user_count {
     type: count_distinct
-    sql: ${user_snowplow_domain_id} ;;
+    sql: ${domain_userid} ;;
 
     filters: {
       field: user_bounced
-      value: "yes"
-    }
-
-    group_label: "Counts"
-  }
-
-  measure: engaged_user_count {
-    type: count_distinct
-    sql: ${user_snowplow_domain_id} ;;
-
-    filters: {
-      field: user_engaged
       value: "yes"
     }
 

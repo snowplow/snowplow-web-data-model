@@ -3,108 +3,54 @@ view: page_views {
     sql: SELECT
 
         -- user
-
-        a.user_id AS user_custom_id,
-        a.domain_userid AS user_snowplow_domain_id,
-        a.network_userid AS user_snowplow_crossdomain_id,
+        a.user_id,
+        a.domain_userid,
+        a.network_userid,
 
         -- sesssion
-
         a.domain_sessionid AS session_id,
         a.domain_sessionidx AS session_index,
 
         -- page view
-
         a.page_view_id,
-
         ROW_NUMBER() OVER (PARTITION BY a.domain_userid ORDER BY b.min_tstamp) AS page_view_index,
         ROW_NUMBER() OVER (PARTITION BY a.domain_sessionid ORDER BY b.min_tstamp) AS page_view_in_session_index,
 
         -- page view: time
-
-        b.min_tstamp AS page_view_start, -- different from canonical SQL
-        b.max_tstamp AS page_view_end, -- different from canonical SQL
-
-          -- example derived dimensions
-
-          -- TO_CHAR(CONVERT_TIMEZONE('UTC', 'Europe/London', b.min_tstamp), 'YYYY-MM-DD HH24:MI:SS') AS page_view_time,
-          -- TO_CHAR(CONVERT_TIMEZONE('UTC', 'Europe/London', b.min_tstamp), 'YYYY-MM-DD HH24:MI') AS page_view_minute,
-          -- TO_CHAR(CONVERT_TIMEZONE('UTC', 'Europe/London', b.min_tstamp), 'YYYY-MM-DD HH24') AS page_view_hour,
-          -- TO_CHAR(CONVERT_TIMEZONE('UTC', 'Europe/London', b.min_tstamp), 'YYYY-MM-DD') AS page_view_date,
-          -- TO_CHAR(DATE_TRUNC('week', CONVERT_TIMEZONE('UTC', 'Europe/London', b.min_tstamp)), 'YYYY-MM-DD') AS page_view_week,
-          -- TO_CHAR(CONVERT_TIMEZONE('UTC', 'Europe/London', b.min_tstamp), 'YYYY-MM') AS page_view_month,
-          -- TO_CHAR(DATE_TRUNC('quarter', CONVERT_TIMEZONE('UTC', 'Europe/London', b.min_tstamp)), 'YYYY-MM') AS page_view_quarter,
-          -- DATE_PART(Y, CONVERT_TIMEZONE('UTC', 'Europe/London', b.min_tstamp))::INTEGER AS page_view_year,
+        b.min_tstamp AS page_view_start,
+        b.max_tstamp AS page_view_end,
 
         -- page view: time in the user's local timezone
-
         CONVERT_TIMEZONE('UTC', a.os_timezone, b.min_tstamp) AS page_view_start_local,
         CONVERT_TIMEZONE('UTC', a.os_timezone, b.max_tstamp) AS page_view_end_local,
 
-          -- example derived dimensions
-
-          -- TO_CHAR(CONVERT_TIMEZONE('UTC', a.os_timezone, b.min_tstamp), 'YYYY-MM-DD HH24:MI:SS') AS page_view_local_time,
-          -- TO_CHAR(CONVERT_TIMEZONE('UTC', a.os_timezone, b.min_tstamp), 'HH24:MI') AS page_view_local_time_of_day,
-          -- DATE_PART(hour, CONVERT_TIMEZONE('UTC', a.os_timezone, b.min_tstamp))::INTEGER AS page_view_local_hour_of_day,
-          -- TRIM(TO_CHAR(CONVERT_TIMEZONE('UTC', a.os_timezone, b.min_tstamp), 'd')) AS page_view_local_day_of_week,
-          -- MOD(EXTRACT(DOW FROM CONVERT_TIMEZONE('UTC', a.os_timezone, b.min_tstamp))::INTEGER - 1 + 7, 7) AS page_view_local_day_of_week_index,
-
-        -- engagement
-
+        -- page view: engagement
         b.time_engaged_in_s,
-
-          -- CASE
-            -- WHEN b.time_engaged_in_s BETWEEN 0 AND 9 THEN '0s to 9s'
-            -- WHEN b.time_engaged_in_s BETWEEN 10 AND 29 THEN '10s to 29s'
-            -- WHEN b.time_engaged_in_s BETWEEN 30 AND 59 THEN '30s to 59s'
-            -- WHEN b.time_engaged_in_s > 59 THEN '60s or more'
-            -- ELSE NULL
-          -- END AS time_engaged_in_s_tier,
-
         c.hmax AS horizontal_pixels_scrolled,
         c.vmax AS vertical_pixels_scrolled,
-
         c.relative_hmax AS horizontal_percentage_scrolled,
         c.relative_vmax AS vertical_percentage_scrolled,
 
-          -- CASE
-            -- WHEN c.relative_vmax BETWEEN 0 AND 24 THEN '0% to 24%'
-            -- WHEN c.relative_vmax BETWEEN 25 AND 49 THEN '25% to 49%'
-            -- WHEN c.relative_vmax BETWEEN 50 AND 74 THEN '50% to 74%'
-            -- WHEN c.relative_vmax BETWEEN 75 AND 100 THEN '75% to 100%'
-            -- ELSE NULL
-          -- END AS vertical_percentage_scrolled_tier,
-
-          -- CASE WHEN b.time_engaged_in_s = 0 THEN TRUE ELSE FALSE END AS user_bounced,
-          -- CASE WHEN b.time_engaged_in_s >= 30 AND c.relative_vmax >= 25 THEN TRUE ELSE FALSE END AS user_engaged,
-
         -- page
-
         a.page_urlhost || a.page_urlpath AS page_url,
-
         a.page_urlscheme AS page_url_scheme,
         a.page_urlhost AS page_url_host,
         a.page_urlport AS page_url_port,
         a.page_urlpath AS page_url_path,
         a.page_urlquery AS page_url_query,
         a.page_urlfragment AS page_url_fragment,
-
         a.page_title,
-
         c.doc_width AS page_width,
         c.doc_height AS page_height,
 
         -- referrer
-
         a.refr_urlhost || a.refr_urlpath AS referrer_url,
-
         a.refr_urlscheme AS referrer_url_scheme,
         a.refr_urlhost AS referrer_url_host,
         a.refr_urlport AS referrer_url_port,
         a.refr_urlpath AS referrer_url_path,
         a.refr_urlquery AS referrer_url_query,
         a.refr_urlfragment AS referrer_url_fragment,
-
         CASE
           WHEN a.refr_medium IS NULL THEN 'direct'
           WHEN a.refr_medium = 'unknown' THEN 'other'
@@ -114,7 +60,6 @@ view: page_views {
         a.refr_term AS referrer_term,
 
         -- marketing
-
         a.mkt_medium AS marketing_medium,
         a.mkt_source AS marketing_source,
         a.mkt_term AS marketing_term,
@@ -124,7 +69,6 @@ view: page_views {
         a.mkt_network AS marketing_network,
 
         -- location
-
         a.geo_country,
         a.geo_region,
         a.geo_region_name,
@@ -135,34 +79,27 @@ view: page_views {
         a.geo_timezone, -- often NULL (use os_timezone instead)
 
         -- IP
-
         a.user_ipaddress AS ip_address,
-
-        a.ip_isp,
-        a.ip_organization,
-        a.ip_domain,
-        a.ip_netspeed AS ip_net_speed,
+        -- a.ip_isp, (only available with paid MaxMind database)
+        -- a.ip_organization, (only available with paid MaxMind database)
+        -- a.ip_domain, (only available with paid MaxMind database)
+        -- a.ip_netspeed AS ip_net_speed, (only available with paid MaxMind database)
 
         -- application
-
         a.app_id,
 
         -- browser
-
         d.useragent_version AS browser,
         d.useragent_family AS browser_name,
         d.useragent_major AS browser_major_version,
         d.useragent_minor AS browser_minor_version,
         d.useragent_patch AS browser_build_version,
         a.br_renderengine AS browser_engine,
-
         c.br_viewwidth AS browser_window_width,
         c.br_viewheight AS browser_window_height,
-
         a.br_lang AS browser_language,
 
         -- OS
-
         d.os_version AS os,
         d.os_family AS os_name,
         d.os_major AS os_major_version,
@@ -172,13 +109,9 @@ view: page_views {
         a.os_timezone,
 
         -- device
-
         d.device_family AS device,
-        a.dvce_type AS device_type,
-        a.dvce_ismobile AS device_is_mobile,
 
         -- page performance
-
         e.redirect_time_in_ms,
         e.unload_time_in_ms,
         e.app_cache_time_in_ms,
@@ -210,7 +143,6 @@ view: page_views {
         AND a.domain_userid IS NOT NULL -- rare edge case
         AND a.domain_sessionidx > 0 -- rare edge case
         AND a.page_urlhost IN ('snowplowanalytics.com', 'discourse.snowplowanalytics.com')
-        -- AND a.br_family != 'Robot/Spider'
         -- AND a.app_id IN ('demo')
         -- AND a.name_tracker = 'demo'
        ;;
@@ -223,21 +155,27 @@ view: page_views {
 
   # User
 
-  dimension: user_custom_id {
+  dimension: user_id {
     type: string
-    sql: ${TABLE}.user_custom_id ;;
+    sql: ${TABLE}.user_id ;;
     group_label: "User"
   }
 
-  dimension: user_snowplow_domain_id {
+  dimension: domain_userid {
     type: string
-    sql: ${TABLE}.user_snowplow_domain_id ;;
+    sql: ${TABLE}.domain_userid ;;
     group_label: "User"
   }
 
-  dimension: user_snowplow_crossdomain_id {
+  dimension: network_userid {
     type: string
-    sql: ${TABLE}.user_snowplow_crossdomain_id ;;
+    sql: ${TABLE}.network_userid ;;
+    group_label: "User"
+  }
+
+  dimension: new_user {
+    type: yesno
+    sql: ${TABLE}.page_view_index = 1 AND ${TABLE}.session_index = 1;;
     group_label: "User"
   }
 
@@ -370,13 +308,7 @@ view: page_views {
 
   dimension: user_bounced {
     type: yesno
-    sql: ${time_engaged} = 0 ;;
-    group_label: "Engagement"
-  }
-
-  dimension: user_engaged {
-    type: yesno
-    sql: ${time_engaged} >= 30 AND ${y_percentage_scrolled} >= 25 ;;
+    sql: ${TABLE}.page_view_in_session_index = 1 ;;
     group_label: "Engagement"
   }
 
@@ -441,6 +373,18 @@ view: page_views {
   dimension: page_height {
     type: number
     sql: ${TABLE}.page_height ;;
+    group_label: "Page"
+  }
+
+  dimension: entry_page {
+    type: yesno
+    sql: ${TABLE}.page_view_index = 1;;
+    group_label: "Page"
+  }
+
+  dimension: exit_page {
+    type: yesno
+    sql: ${TABLE}.page_view_index = ${TABLE}.page_view_in_session_index;;
     group_label: "Page"
   }
 
@@ -623,29 +567,29 @@ view: page_views {
     group_label: "IP"
   }
 
-  dimension: ip_isp {
-    type: string
-    sql: ${TABLE}.ip_isp ;;
-    group_label: "IP"
-  }
+  # dimension: ip_isp {
+    # type: string
+    # sql: ${TABLE}.ip_isp ;;
+    # group_label: "IP"
+  # }
 
-  dimension: ip_organization {
-    type: string
-    sql: ${TABLE}.ip_organization ;;
-    group_label: "IP"
-  }
+  # dimension: ip_organization {
+    # type: string
+    # sql: ${TABLE}.ip_organization ;;
+    # group_label: "IP"
+  # }
 
-  dimension: ip_domain {
-    type: string
-    sql: ${TABLE}.ip_domain ;;
-    group_label: "IP"
-  }
+  # dimension: ip_domain {
+    # type: string
+    # sql: ${TABLE}.ip_domain ;;
+    # group_label: "IP"
+  # }
 
-  dimension: ip_net_speed {
-    type: string
-    sql: ${TABLE}.ip_net_speed ;;
-    group_label: "IP"
-  }
+  # dimension: ip_net_speed {
+    # type: string
+    # sql: ${TABLE}.ip_net_speed ;;
+    # group_label: "IP"
+  # }
 
   # Application
 
@@ -886,18 +830,6 @@ view: page_views {
     group_label: "Counts"
   }
 
-  measure: engaged_page_view_count {
-    type: count_distinct
-    sql: ${page_view_id} ;;
-
-    filters: {
-      field: user_engaged
-      value: "yes"
-    }
-
-    group_label: "Counts"
-  }
-
   measure: session_count {
     type: count_distinct
     sql: ${session_id} ;;
@@ -906,7 +838,7 @@ view: page_views {
 
   measure: user_count {
     type: count_distinct
-    sql: ${user_snowplow_domain_id} ;;
+    sql: ${domain_userid} ;; # alternatively use user_id or network_userid here
     group_label: "Counts"
   }
 

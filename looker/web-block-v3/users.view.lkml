@@ -4,20 +4,16 @@ view: users {
 
         SELECT
 
-          user_snowplow_domain_id,
+          domain_userid,
 
           -- time
-
           MIN(session_start) AS first_session_start,
           MIN(session_start_local) AS first_session_start_local,
-
           MAX(session_end) AS last_session_end,
 
           -- engagement
-
           SUM(page_views) AS page_views,
           COUNT(*) AS sessions,
-
           SUM(time_engaged_in_s) AS time_engaged_in_s
 
         FROM ${sessions.SQL_TABLE_NAME}
@@ -30,79 +26,50 @@ view: users {
       SELECT
 
         -- user
-
-        a.user_custom_id,
-        a.user_snowplow_domain_id,
-        a.user_snowplow_crossdomain_id,
+        a.user_id,
+        a.domain_userid,
+        a.network_userid,
 
         -- first sesssion: time
-
         b.first_session_start,
 
-          -- example derived dimensions
-
-          -- TO_CHAR(b.first_session_start, 'YYYY-MM-DD HH24:MI:SS') AS first_session_time,
-          -- TO_CHAR(b.first_session_start, 'YYYY-MM-DD HH24:MI') AS first_session_minute,
-          -- TO_CHAR(b.first_session_start, 'YYYY-MM-DD HH24') AS first_session_hour,
-          -- TO_CHAR(b.first_session_start, 'YYYY-MM-DD') AS first_session_date,
-          -- TO_CHAR(DATE_TRUNC('week', b.first_session_start), 'YYYY-MM-DD') AS first_session_week,
-          -- TO_CHAR(b.first_session_start, 'YYYY-MM') AS first_session_month,
-          -- TO_CHAR(DATE_TRUNC('quarter', b.first_session_start), 'YYYY-MM') AS first_session_quarter,
-          -- DATE_PART(Y, b.first_session_start)::INTEGER AS first_session_year,
-
         -- first session: time in the user's local timezone
-
         b.first_session_start_local,
 
-          -- example derived dimensions
-
-          -- TO_CHAR(b.first_session_start_local, 'YYYY-MM-DD HH24:MI:SS') AS first_session_local_time,
-          -- TO_CHAR(b.first_session_start_local, 'HH24:MI') AS first_session_local_time_of_day,
-          -- DATE_PART(hour, b.first_session_start_local)::INTEGER AS first_session_local_hour_of_day,
-          -- TRIM(TO_CHAR(b.first_session_start_local, 'd')) AS first_session_local_day_of_week,
-          -- MOD(EXTRACT(DOW FROM b.first_session_start_local)::INTEGER - 1 + 7, 7) AS first_session_local_day_of_week_index,
-
         -- last session: time
-
         b.last_session_end,
 
-        -- engagement
+        -- last session: time in the user's local timezone
+        b.last_session_start_local,
 
+        -- engagement
         b.page_views,
         b.sessions,
-
         b.time_engaged_in_s,
 
         -- first page
-
         a.first_page_url,
-
         a.first_page_url_scheme,
         a.first_page_url_host,
         a.first_page_url_port,
         a.first_page_url_path,
         a.first_page_url_query,
         a.first_page_url_fragment,
-
         a.first_page_title,
 
         -- referrer
-
         a.referrer_url,
-
         a.referrer_url_scheme,
         a.referrer_url_host,
         a.referrer_url_port,
         a.referrer_url_path,
         a.referrer_url_query,
         a.referrer_url_fragment,
-
         a.referrer_medium,
         a.referrer_source,
         a.referrer_term,
 
         -- marketing
-
         a.marketing_medium,
         a.marketing_source,
         a.marketing_term,
@@ -112,18 +79,17 @@ view: users {
         a.marketing_network,
 
         -- application
-
         a.app_id
 
       FROM ${sessions.SQL_TABLE_NAME} AS a
 
       INNER JOIN prep AS b
-        ON a.user_snowplow_domain_id = b.user_snowplow_domain_id
+        ON a.domain_userid = b.domain_userid
 
       WHERE a.session_index = 1
        ;;
     sql_trigger_value: SELECT COUNT(*) FROM ${sessions.SQL_TABLE_NAME} ;;
-    distribution: "user_snowplow_domain_id"
+    distribution: "domain_userid"
     sortkeys: ["first_session_start"]
   }
 
@@ -131,21 +97,21 @@ view: users {
 
   # User
 
-  dimension: user_custom_id {
+  dimension: user_id {
     type: string
-    sql: ${TABLE}.user_custom_id ;;
+    sql: ${TABLE}.user_id ;;
     group_label: "User"
   }
 
-  dimension: user_snowplow_domain_id {
+  dimension: domain_userid {
     type: string
-    sql: ${TABLE}.user_snowplow_domain_id ;;
+    sql: ${TABLE}.domain_userid ;;
     group_label: "User"
   }
 
-  dimension: user_snowplow_crossdomain_id {
+  dimension: network_userid {
     type: string
-    sql: ${TABLE}.user_snowplow_crossdomain_id ;;
+    sql: ${TABLE}.network_userid ;;
     group_label: "User"
   }
 
@@ -405,7 +371,7 @@ view: users {
 
   measure: user_count {
     type: count_distinct
-    sql: ${user_snowplow_domain_id} ;;
+    sql: ${domain_userid} ;;
     group_label: "Counts"
   }
 }
