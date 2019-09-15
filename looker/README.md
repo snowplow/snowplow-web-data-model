@@ -9,6 +9,7 @@
 The contents of this folder are as follows:
 
 * This `README.md` file
+* `web-block-v3` with the LATEST Looker Block for users on Looker 4
 * `web-block-v2` with the OLD Looker Block for users on Looker 4
 * `web-block-v1` with the Looker Block for users on Looker 3
 
