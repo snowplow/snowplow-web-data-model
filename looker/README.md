@@ -10,7 +10,7 @@ The contents of this folder are as follows:
 
 * This `README.md` file
 * `web-block` with the Looker Block for users on Looker 4
-* `web-block-old-lookml` with the Looker Block for users on Looker 3
+* `web-block-v1` with the Looker Block for users on Looker 3
 
 ## Copyright and license
 
