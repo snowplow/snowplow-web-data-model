@@ -1,3 +1,18 @@
+Release 4 (2019-10-07)
+----------------------
+Common: add placeholder for Release 3 in CHANGELOG (#29)
+Common: reverse order of entries in CHANGELOG (#23)
+Looker: catch-all for remaining updates to v3 (#31)
+Looker: rename 'referer' to 'referrer' everywhere (#30)
+Looker: update source tables to use looker_ prefix (#38)
+Looker: update WHERE clause for page_views view (#39)
+Looker: expose user_snowplow_crossdomain_id (#35)
+Looker: replace app_id and name_tracker with demo (#37)
+Looker: replace atomic schema with demo schema (#36)
+Looker: stub web-block-v3 from web-block-v2 (#34)
+Looker: rename web-block to web-block-v2 (#33)
+Looker: rename web-block-old-lookml to web-block-v1 (#32)
+
 Release 3 (2019-01-03)
 ----------------------
 Placeholder - need to add commits
